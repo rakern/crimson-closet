@@ -2,6 +2,7 @@
 using crimson_closet.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace crimson_closet.Controllers
@@ -33,7 +34,10 @@ namespace crimson_closet.Controllers
         }
 
         public IActionResult Create()
-        { 
+        {
+            ViewData["UserId"] = new SelectList(_dbcontext.Users, "Id", "UserName");
+            ViewData["RoleId"] = new SelectList(_dbcontext.Roles, "Id", "Name");
+
             return View();
         }
 
@@ -42,11 +46,10 @@ namespace crimson_closet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ApplicationUserRole userRole)
         {
-            var userRoleExists = _dbcontext.ApplicationUserRoles.Include(c => c.User).Include(c => c.Role)
-                .Where(c => c.UserId.ToString() == userRole.User.Id).Where(c => c.RoleId.ToString() ==userRole.Role.Id);
-            Console.WriteLine(userRoleExists);
-
-            if (userRoleExists == null)
+            //var userRoleExists = _dbcontext.ApplicationUserRoles.Include(c => c.User)
+            //    .Include(c => c.Role).Any(o => (o.UserId.ToString() == userRole.User.Id && o.RoleId.ToString() == userRole.Role.Id));
+            Console.WriteLine(_dbcontext.ApplicationUserRoles);
+            if (false)
             {
                 //role.name is used because Name is the property in IdentityRole that we need to set for the DB to update
                 var result = await _userManager.AddToRoleAsync(userRole.User, userRole.Role.Name);
