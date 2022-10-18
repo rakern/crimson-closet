@@ -1,4 +1,4 @@
-﻿@model IEnumerable<crimson_closet.Models.CrimsonClosetUserForDisplay>
+﻿@model IEnumerable<crimson_closet.Areas.Identity.Data.ApplicationUser>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Username)
+                @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th></th>
         </tr>
@@ -41,7 +41,7 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Username)
+                    @Html.DisplayFor(modelItem => item.UserName)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

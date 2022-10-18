@@ -25,20 +25,20 @@ namespace crimson_closet.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<BasicUser> _signInManager;
-        private readonly UserManager<BasicUser> _userManager;
-        private readonly IUserStore<BasicUser> _userStore;
-        private readonly IUserEmailStore<BasicUser> _emailStore;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly dbContext _dbContext;
+        private readonly ApplicationDbContext _ApplicationDbContext;
 
         public RegisterModel(
-            UserManager<BasicUser> userManager,
-            IUserStore<BasicUser> userStore,
-            SignInManager<BasicUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            IUserStore<ApplicationUser> userStore,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, dbContext dbContext)
+            IEmailSender emailSender, ApplicationDbContext ApplicationDbContext)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -46,7 +46,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _dbContext = dbContext;
+            _ApplicationDbContext = ApplicationDbContext;
         }
 
         
@@ -108,7 +108,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             // This is where we are validating that email is unique
-            var emailAlreadyExists = _dbContext.Users.Any(x => x.Email == Input.Email);
+            var emailAlreadyExists = _ApplicationDbContext.Users.Any(x => x.Email == Input.Email);
             if (emailAlreadyExists)
             {
                 ModelState.AddModelError(string.Empty, "Email already exists.");
@@ -165,27 +165,27 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private BasicUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<BasicUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(BasicUser)}'. " +
-                    $"Ensure that '{nameof(BasicUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<BasicUser> GetEmailStore()
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<BasicUser>)_userStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
     }
 }

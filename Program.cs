@@ -5,11 +5,11 @@ using crimson_closet.Areas.Identity.Data;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("dbContextConnection") ?? throw new InvalidOperationException("Connection string 'dbContextConnection' not found.");
 
-builder.Services.AddDbContext<dbContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<BasicUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddRoles<IdentityRole>().AddEntityFrameworkStores<dbContext>();
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -26,6 +26,8 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
 });
+
+
 
 var app = builder.Build();
 

@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using crimson_closet.Areas.Identity.Data
 
-@inject SignInManager<BasicUser> SignInManager
-@inject UserManager<BasicUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
