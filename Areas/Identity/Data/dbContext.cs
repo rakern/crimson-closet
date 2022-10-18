@@ -21,4 +21,6 @@ public class dbContext : IdentityDbContext<BasicUser>
         // Add your customizations after calling base.OnModelCreating(builder);
     }
 
+    public DbSet<crimson_closet.Models.CrimsonClosetUserForDisplay> CrimsonClosetUserForDisplay { get; set; }
+
 }

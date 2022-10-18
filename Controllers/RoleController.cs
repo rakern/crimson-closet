@@ -1,4 +1,5 @@
-﻿using crimson_closet.Data;
+﻿using crimson_closet.Areas.Identity.Data;
+using crimson_closet.Data;
 using crimson_closet.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,12 +9,13 @@ namespace crimson_closet.Controllers
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly dbContext _dbContext;
 
-        public RoleController(RoleManager<IdentityRole> roleManager, dbContext dbContext)
+        
+
+        public RoleController(RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
-            _dbContext = dbContext;
+            
         }
 
         public IActionResult Index()
