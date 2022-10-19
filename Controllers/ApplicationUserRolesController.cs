@@ -1,5 +1,6 @@
 ﻿using crimson_closet.Areas.Identity.Data;
 using crimson_closet.Data;
+using crimson_closet.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,8 +13,8 @@ namespace crimson_closet.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _dbcontext;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManger; 
-        private readonly RoleManager<ApplicationRole> _userRoleManger; 
+        private readonly RoleManager<ApplicationRole> _roleManger;
+        private readonly RoleManager<ApplicationRole> _userRoleManger;
 
         public ApplicationUserRolesController(ILogger<HomeController> logger,
          UserManager<ApplicationUser> userManager,
@@ -27,10 +28,17 @@ namespace crimson_closet.Controllers
         }
         public IActionResult Index()
         {
-            //QUeries for all UserRole instances in table
-            var userRoles = _dbcontext.ApplicationUserRoles.Include(c => c.User).Include(c => c.Role).ToList();
-       
-            return View(userRoles);
+            try
+            {
+                //QUeries for all UserRole instances in table
+                var userRoles = _dbcontext.ApplicationUserRoles.Include(c => c.User).Include(c => c.Role).ToList();
+                return View(userRoles);
+
+            }
+            catch
+            {
+                return View(new List<ApplicationUserRole>());
+            }
         }
 
         public IActionResult Create()
@@ -50,8 +58,8 @@ namespace crimson_closet.Controllers
             //Check to see if there is already a combo of User and Role like this already in database.
             var search = _dbcontext.ApplicationUserRoles.Include(c => c.User).Include(c => c.Role)
                 .ToList().Where(c => (c.User.Id == userRole.UserId.ToString() && c.Role.Id == userRole.RoleId.ToString()));
-          
-            
+
+
             if (search.Count() == 0)
             {
                 //The userRole parameter comes into this method with only the Foreign Keys: UserID and RoleID
@@ -72,6 +80,59 @@ namespace crimson_closet.Controllers
             ViewData["RoleId"] = new SelectList(_dbcontext.Roles, "Id", "Name", userRole.RoleId);
 
             return View(userRole);
+        }
+
+        // GET: ApplicationUserRoles/Details/5
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            Console.WriteLine(id);
+            if (id == null || _userManager == null)
+            {
+                return NotFound();
+            }
+
+            //Get the user from id
+            var userRole = _dbcontext.ApplicationUserRoles.Include(c => c.User).Include(c => c.Role)
+                .ToList();//.Where(c => (c.User.Id == userRole.UserId.ToString() && c.Role.Id == userRole.RoleId.ToString()))
+
+
+
+            if (userRole == null)
+            {
+                return NotFound();
+            }
+
+            return View(userRole);
+        }
+
+        // POST: ApplicationRoles/Delete/UserId/RoleId
+
+        [HttpPost, ActionName("Delete")]
+        //We pass in both the UserId and RoleId to know which record to delete since they are both together the primary keys
+        [Route("/ApplicationUserRoles/Delete/:UserId/:RoleId", Name = "deleteUserRole")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid UserId, Guid RoleId)
+        {
+           
+
+            //Delete the role/user match
+            try
+            {
+                ApplicationUserRole userRole = new ApplicationUserRole();
+                userRole.UserId = UserId;
+                userRole.RoleId = RoleId;
+                userRole.User = _userManager.Users.Where(c => c.Id == userRole.UserId.ToString()).ToList()[0];
+                userRole.Role = _dbcontext.Roles.Where(c => c.Id == userRole.RoleId.ToString()).ToList()[0];
+
+                await _userManager.RemoveFromRoleAsync(userRole.User, userRole.Role.Name);
+
+            }catch{
+                //doesnt work... my attempt on trying to throw a js error
+                return Content("<script language='javascript' type='text/javascript'>alert('Could not Delete!');</script>");
+            }
+
+            await _dbcontext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

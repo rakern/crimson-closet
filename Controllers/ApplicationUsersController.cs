@@ -30,25 +30,46 @@ namespace crimson_closet.Controllers
 
         public IActionResult Index()
         {
-            //List<CrimsonClosetUserForDisplay> userList = new List<CrimsonClosetUserForDisplay>();
+            //some simple error handling or else it will blow up if they are not connected to db
+            try
+            {
+                var users = _userManager.Users.ToList();
+                return View(users);
+            }
+            catch
+            {
+                return View(new List<ApplicationUser>());
+            }
 
-            //// Becuase we can't use the BasicUser that Ientity has created, we created a new User Model that will be used for displaying the users
-            //foreach (var aspNetUser in _userManager.Users.ToList())
-            //{
-            //    userList.Add(new CrimsonClosetUserForDisplay() { 
-            //        Id = new Guid(aspNetUser.Id), 
-            //        FirstName = aspNetUser.FirstName,
-            //        LastName = aspNetUser.LastName,
-            //        Email = aspNetUser.Email,
-            //        Username = aspNetUser.UserName
-                    
-            //    });
-            //}
-
-            return View(_userManager.Users.ToList());
         }
 
-     
+        // GET: ApplicationUsers/Details/5
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null || _userManager == null)
+            {
+                return NotFound();
+            }
+
+            //Get the user from id
+            var user = await _userManager.Users
+                .FirstOrDefaultAsync(m => m.Id == id.ToString());
+            //get a list of strings of the roles
+            var roleListString = await _userManager.GetRolesAsync(user);
+            //fill a custom view model that has been created from the default display view
+            DetailsUser_VM detailsUser_VM = new DetailsUser_VM();
+            detailsUser_VM.User = user;
+            detailsUser_VM.Roles = roleListString;
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(detailsUser_VM);
+        }
+
+
 
     }
 }

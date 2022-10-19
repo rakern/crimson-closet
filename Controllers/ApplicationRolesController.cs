@@ -87,7 +87,7 @@ namespace crimson_closet.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Actors/Details/5
+        // GET: ApplicationRoles/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _roleManager == null)

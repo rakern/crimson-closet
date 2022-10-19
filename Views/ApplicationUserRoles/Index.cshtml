@@ -15,7 +15,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.User.UserName)
             </th>
-          
+
             <th>
                 Roll Name
             </th>
@@ -25,19 +25,25 @@
     <tbody>
         @foreach (var item in Model)
         {
+            //sets the parameters
+            var parms = new Dictionary<string, string>
+        {
+        { "UserId", item.User.Id },
+        { "RoleId", item.Role.Id }
+        };
+
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.User.UserName)
                 </td>
-                
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Role.Name)
                 </td>
-              
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <form asp-action="Delete">
+                        <input asp-controller ="ApplicationUserRoles" asp-action="Delete" asp-all-route-data="parms" type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
                 </td>
             </tr>
         }
