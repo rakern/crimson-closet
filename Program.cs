@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using crimson_closet.Data;
 using crimson_closet.Areas.Identity.Data;
+
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("dbContextConnection") ?? throw new InvalidOperationException("Connection string 'dbContextConnection' not found.");
+//hide the connection stirng in an envirment varibale for protection
+var connectionString = Environment.GetEnvironmentVariable("CrimsonClosetSQLConnectionString"); ?? throw new InvalidOperationException("Connection string 'dbContextConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
