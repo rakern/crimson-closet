@@ -5,7 +5,7 @@ using crimson_closet.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 //hide the connection stirng in an envirment varibale for protection
-var connectionString = Environment.GetEnvironmentVariable("CrimsonClosetSQLConnectionString"); ?? throw new InvalidOperationException("Connection string 'dbContextConnection' not found.");
+var connectionString = Environment.GetEnvironmentVariable("CrimsonClosetSQLConnectionString") ?? throw new InvalidOperationException("Connection string 'dbContextConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
