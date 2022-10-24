@@ -12,8 +12,8 @@ using crimson_closet.Data;
 namespace crimson_closet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221018071731_initial")]
-    partial class initial
+    [Migration("20221024175020_newdb")]
+    partial class newdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
