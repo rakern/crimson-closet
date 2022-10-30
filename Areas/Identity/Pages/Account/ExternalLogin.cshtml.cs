@@ -86,8 +86,8 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            //[Required]
+            //[EmailAddress]
             public string Email { get; set; }
             [Required]
             public string FirstName { get; set; }
@@ -97,7 +97,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             public string UserName { get; set; }
         }
-        
+
         public IActionResult OnGet() => RedirectToPage("./Login");
 
         public IActionResult OnPost(string provider, string returnUrl = null)
@@ -125,6 +125,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account
 
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            Console.WriteLine("\n\n\n" + result.Succeeded.ToString());
             if (result.Succeeded)
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
@@ -134,27 +135,39 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             {
                 return RedirectToPage("./Lockout");
             }
-            else
+
+            // This is where we are validating that email is unique
+            //if not, then redirect back to login page and show error message
+            var emailAlreadyExists = _dbContext.Users.Any(x => x.Email == info.Principal.FindFirstValue(ClaimTypes.Email));
+            if (emailAlreadyExists)
             {
-                // If the user does not have an account, then ask the user to create an account.
-                ReturnUrl = returnUrl;
-                ProviderDisplayName = info.ProviderDisplayName;
-                if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
-                {
-                    Input = new InputModel
-                    {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    };
-                }
-                return Page();
+                ErrorMessage = "Email already exists as a user.";
+                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
+
+            // If the user does not have an account, then ask the user to create an account.
+            ReturnUrl = returnUrl;
+            ProviderDisplayName = info.ProviderDisplayName;
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+            {
+                Input = new InputModel
+                {
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+
+                };
+            }
+            return Page();
+
         }
 
         public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            // Get the information about the user from the external login provider
+            // Get the information about the user from the external login
+            //the info.Principal.... line gets the info from the external login
             var info = await _signInManager.GetExternalLoginInfoAsync();
+            Input.Email = info.Principal.FindFirstValue(ClaimTypes.Email);
+
             if (info == null)
             {
                 ErrorMessage = "Error loading external login information during confirmation.";
@@ -164,16 +177,11 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+             
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-
-                // This is where we are validating that email is unique
-                var emailAlreadyExists = _dbContext.Users.Any(x => x.Email == Input.Email);
-                if (emailAlreadyExists)
-                {
-                    ModelState.AddModelError(string.Empty, "Email already exists.");
-                }
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
