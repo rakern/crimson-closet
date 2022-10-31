@@ -23,6 +23,7 @@ namespace crimson_closet.Controllers
 
         public IActionResult Index()
         {
+
             return View(_roleManager.Roles.ToList());
         }
 

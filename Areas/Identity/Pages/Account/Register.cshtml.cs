@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using crimson_closet.Data;
+using EmailService;
 
 namespace crimson_closet.Areas.Identity.Pages.Account
 {
@@ -30,7 +31,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly EmailService.IEmailSender _emailSender;
         private readonly ApplicationDbContext _ApplicationDbContext;
 
         public RegisterModel(
@@ -38,7 +39,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, ApplicationDbContext ApplicationDbContext)
+            EmailService.IEmailSender emailSender, ApplicationDbContext ApplicationDbContext)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -49,17 +50,17 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             _ApplicationDbContext = ApplicationDbContext;
         }
 
-        
+
         [BindProperty]
         public InputModel Input { get; set; }
 
-        
+
         public string ReturnUrl { get; set; }
 
-        
+
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        
+
         public class InputModel
         {
             [Required]
@@ -127,23 +128,32 @@ namespace crimson_closet.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 // Default role is Customer
-                var roleAppliedResult = await _userManager.AddToRoleAsync(user, "Customer"); 
+                var roleAppliedResult = await _userManager.AddToRoleAsync(user, "Customer");
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    //Gets token for email confirmation
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
+                    var confirmEmailURL = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //sends the confirmation email
+                    var message = new EmailMessage(new string[] { Input.Email },
+                        "Email Confirmation For Crimson Closet", $"Please confirm your account by clicking this link: {confirmEmailURL}");
+                    _emailSender.SendEmail(message);
+
+                    //OLD CODE!
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

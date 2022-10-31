@@ -184,6 +184,10 @@ namespace crimson_closet.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 var result = await _userManager.CreateAsync(user);
+
+                // Default role is Customer
+                var roleAppliedResult = await _userManager.AddToRoleAsync(user, "Customer");
+
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddLoginAsync(user, info);
