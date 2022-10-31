@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using crimson_closet.Data;
+using System.Text.RegularExpressions;
 
 namespace crimson_closet.Areas.Identity.Pages.Account
 {
@@ -96,6 +97,18 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             [Required]
             [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             public string UserName { get; set; }
+
+
+            [Required]
+            [StringLength(8, ErrorMessage = "The {0} must be {1} characters long.", MinimumLength = 8)]
+            [RegularExpression("[0-9]+$", ErrorMessage = "A CWID Must have only numbers")]
+            [Display(Name = "CWID")]
+            public string CWID { get; set; }
+
+            [Required]
+            [RegularExpression("^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$", ErrorMessage = "Not a valid phone format")]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
         }
 
         public IActionResult OnGet() => RedirectToPage("./Login");
@@ -125,7 +138,6 @@ namespace crimson_closet.Areas.Identity.Pages.Account
 
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
-            Console.WriteLine("\n\n\n" + result.Succeeded.ToString());
             if (result.Succeeded)
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
@@ -139,11 +151,13 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             // This is where we are validating that email is unique
             //if not, then redirect back to login page and show error message
             var emailAlreadyExists = _dbContext.Users.Any(x => x.Email == info.Principal.FindFirstValue(ClaimTypes.Email));
-            if (emailAlreadyExists)
+            var emailMatchToUAEmailEnding = Regex.Matches(info.Principal.FindFirstValue(ClaimTypes.Email), ".*@crimson.ua.edu|.*@ua.edu|.*@cba.ua.edu");
+            if (emailAlreadyExists || emailMatchToUAEmailEnding.Count == 0)
             {
-                ErrorMessage = "Email already exists as a user.";
+                ErrorMessage = emailAlreadyExists ? "Email already exists as a user." : "Email is not a valid UA email.";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
+
 
             // If the user does not have an account, then ask the user to create an account.
             ReturnUrl = returnUrl;
@@ -179,8 +193,18 @@ namespace crimson_closet.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
+                user.PhoneNumber = Regex.Replace(Input.PhoneNumber, "[^0-9]", ""); //remove any charscter that is not an int
+                user.EmailConfirmed = true;
+
+                user.CWID = Input.CWID;
+                // This is where we are validating that CWID is unique
+                var CWIDAlreadyExists = _dbContext.Users.Any(x => x.CWID == Input.CWID);
+                if (CWIDAlreadyExists)
+                {
+                    ModelState.AddModelError(string.Empty, "An Account with that CWID already exists.");
+                }
+
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
-             
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 var result = await _userManager.CreateAsync(user);
@@ -207,10 +231,16 @@ namespace crimson_closet.Areas.Identity.Pages.Account
                         await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                             $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                        // If account confirmation is required, we need to show the link if we don't have a real email sender
+                        // Since Auth is through the Microsoft email, no need to verify
+                        //Sign in the user right after they create their account
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
-                            return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
+                            var signInResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+                            if (signInResult.Succeeded)
+                            {
+                                return RedirectToPage("/");
+                            }
+                            return RedirectToPage("./Login");
                         }
 
                         await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);

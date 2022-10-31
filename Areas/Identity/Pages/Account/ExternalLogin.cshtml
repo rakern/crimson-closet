@@ -42,6 +42,16 @@
                 <label asp-for="Input.LastName" class="form-label"></label>
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
+            <div class="form-floating">
+                <input asp-for="Input.CWID" class="form-control" autocomplete="email" />
+                <label asp-for="Input.CWID" class="form-label"></label>
+                <span asp-validation-for="Input.CWID" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="email" />
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>

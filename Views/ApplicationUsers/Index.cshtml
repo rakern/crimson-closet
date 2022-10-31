@@ -24,6 +24,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CWID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -42,6 +48,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CWID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using crimson_closet.Data;
 using EmailService;
+using System.Text.RegularExpressions;
 
 namespace crimson_closet.Areas.Identity.Pages.Account
 {
@@ -75,8 +76,20 @@ namespace crimson_closet.Areas.Identity.Pages.Account
 
             [Required]
             [EmailAddress]
+            [RegularExpression(".*@crimson.ua.edu|.*@ua.edu|.*@cba.ua.edu", ErrorMessage ="Your email needs to be a valid UA Email (ex. crimson.ua.edu)")]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            [Required]
+            [StringLength(8, ErrorMessage ="The {0} must be {1} characters long.", MinimumLength =8)]
+            [RegularExpression("[0-9]+$", ErrorMessage ="A CWID Must have only numbers")]
+            [Display(Name = "CWID")]
+            public string CWID { get; set; }
+
+            [Required]
+            [RegularExpression("^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$", ErrorMessage ="Not a valid phone format")]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
 
             [Required]
             [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -114,13 +127,20 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             {
                 ModelState.AddModelError(string.Empty, "Email already exists.");
             }
-
+            // This is where we are validating that CWID is unique
+            var CWIDAlreadyExists = _ApplicationDbContext.Users.Any(x => x.CWID == Input.CWID);
+            if (CWIDAlreadyExists)
+            {
+                ModelState.AddModelError(string.Empty, "An Account with that CWID already exists.");
+            }
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
 
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
+                user.CWID = Input.CWID;
+                user.PhoneNumber = Regex.Replace(Input.PhoneNumber, "[^0-9]",""); //remove any charscter that is not an int
 
                 // Username is now the UserName instead of the Email
                 await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
