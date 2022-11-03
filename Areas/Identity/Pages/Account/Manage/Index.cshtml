@@ -7,20 +7,34 @@
 
 <h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
+<div class="row w-100">
+    <div class="col-md-12">
         <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
+            <div asp-validation-summary="ModelOnly" class="custom-ua-summary-error-message"></div>
+            <div class="form-group mb-3 ml-5 mr-5">
+                <label asp-for="Input.FirstName" class="form-label">First Name<span class="required-asterisk">*</span></label>
+                <input asp-for="Input.FirstName" class="form-control"  />
+                <span asp-validation-for="Input.FirstName" class=""></span>
+            </div>
+            <div class="form-group mb-3 ml-5 mr-5">
+                <label asp-for="Input.LastName" class="form-label">Last Name<span class="required-asterisk">*</span></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class=""></span>
+            </div>
+            <div class="form-group mb-3 ml-5 mr-5">
+                <label asp-for="Username" class="form-label">Username</label>
                 <input asp-for="Username" class="form-control" disabled />
-                <label asp-for="Username" class="form-label"></label>
             </div>
-            <div class="form-floating">
+            <div class="form-group mb-3 ml-5 mr-5">
+                <label asp-for="Input.CWID" class="form-label">CWID</label>
+                <input asp-for="Input.CWID" class="form-control" disabled />
+            </div>
+            <div class="form-group mb-3 ml-5 mr-5">
+                <label asp-for="Input.PhoneNumber" class="form-label">Phone Number<span class="required-asterisk">*</span></label>
                 <input asp-for="Input.PhoneNumber" class="form-control" />
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                <span asp-validation-for="Input.PhoneNumber" class=""></span>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-crimson">Save</button>
         </form>
     </div>
 </div>

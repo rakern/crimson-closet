@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using crimson_closet.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace crimson_closet.Areas.Identity.Pages.Account.Manage
@@ -59,6 +60,20 @@ namespace crimson_closet.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+            [Required]
+
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+          
+            [Display(Name = "CWID")]
+            public string CWID { get; set; }
+
+
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -70,7 +85,10 @@ namespace crimson_closet.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                CWID = user.CWID
             };
         }
 
@@ -89,6 +107,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+    
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -96,10 +115,20 @@ namespace crimson_closet.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
+               
                 await LoadAsync(user);
                 return Page();
             }
 
+            //goes through and updateshe user with the new information
+            if (Input.FirstName != user.FirstName)
+            {
+                user.FirstName = Input.FirstName;
+            }
+            if (Input.LastName != user.LastName)
+            {
+                user.LastName = Input.LastName;
+            }
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
@@ -110,6 +139,15 @@ namespace crimson_closet.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                StatusMessage = "Unexpected error when trying to save profile";
+                return RedirectToPage();
+            }
+
+
+
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

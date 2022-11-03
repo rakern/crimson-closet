@@ -7,6 +7,7 @@
 /*global document: false, jQuery: false */
 
 (function (factory) {
+   
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define("jquery.validate.unobtrusive", ['jquery-validation'], factory);
@@ -18,6 +19,7 @@
         jQuery.validator.unobtrusive = factory(jQuery);
     }
 }(function ($) {
+ 
     var $jQval = $.validator,
         adapters,
         data_validation = "unobtrusiveValidation";
@@ -50,23 +52,26 @@
     }
 
     function onError(error, inputElement) {  // 'this' is the form element
+    
         var container = $(this).find("[data-valmsg-for='" + escapeAttributeValue(inputElement[0].name) + "']"),
             replaceAttrValue = container.attr("data-valmsg-replace"),
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
-
-        container.removeClass("field-validation-valid").addClass("field-validation-error");
+        ////added the class cutom-ua.. so we can add styling to the error messages
+        container.removeClass("field-validation-valid").addClass("field-validation-error").addClass("custom-ua-error-message");
         error.data("unobtrusiveContainer", container);
-
         if (replace) {
             container.empty();
+        
             error.removeClass("input-validation-error").appendTo(container);
         }
         else {
+            
             error.hide();
         }
     }
-
+ 
     function onErrors(event, validator) {  // 'this' is the form element
+  
         var container = $(this).find("[data-valmsg-summary=true]"),
             list = container.find("ul");
 
@@ -86,8 +91,8 @@
         if (container) {
             var replaceAttrValue = container.attr("data-valmsg-replace"),
                 replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
-
-            container.addClass("field-validation-valid").removeClass("field-validation-error");
+            ////added the class cutom-ua.. so we can add styling to the error messages
+            container.addClass("field-validation-valid").removeClass("field-validation-error").removeClass("custom-ua-error-message");
             error.removeData("unobtrusiveContainer");
 
             if (replace) {
@@ -119,6 +124,7 @@
             .removeData("unobtrusiveContainer")
             .find(">*")  // If we were using valmsg-replace, get the underlying error
             .removeData("unobtrusiveContainer");
+
     }
 
     function validationInfo(form) {
@@ -430,3 +436,4 @@
 
     return $jQval.unobtrusive;
 }));
+

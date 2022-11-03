@@ -1,10 +1,42 @@
+:root{
+    --primary-color: #9e1b32;
+    --secondary-color: #828a8f;
+}
+
+.account-manage-container {
+    max-width: 500px;
+    width:100%;
+  
+ 
+}
+
+.crimson-color-tabs .nav-link.active, .nav-link-custom:hover {
+    color: var(--primary-color);
+}
+
+.nav-link-custom{
+    color:var(--secondary-color);
+}
+
+.custom-ua-summary-error-message {
+    color: var(--primary-color);
+}
+.custom-ua-summary-error-message ul{
+    list-style: none;
+    margin: 0;
+    padding:5px 0;
+}
+
+.custom-ua-error-message{
+    color:var(--primary-color);
+}
 .mw-login-form {
     max-width: 358px
 }
-vh-100{
-    height: 100vh;
-}
-.provider-logo{
+.provider-logo {
     width: 20px;
     margin: 0 10px;
+}
+.vh-100 {
+    height: 100vh;
 }
