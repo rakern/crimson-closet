@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using crimson_closet.Data;
-using EmailService;
+using Services.EmailService;
 using System.Text.RegularExpressions;
 
 namespace crimson_closet.Areas.Identity.Pages.Account
@@ -32,7 +32,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly EmailService.IEmailSender _emailSender;
+        private readonly Services.EmailService.IEmailSender _emailSender;
         private readonly ApplicationDbContext _ApplicationDbContext;
 
         public RegisterModel(
@@ -40,7 +40,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            EmailService.IEmailSender emailSender, ApplicationDbContext ApplicationDbContext)
+            Services.EmailService.IEmailSender emailSender, ApplicationDbContext ApplicationDbContext)
         {
             _userManager = userManager;
             _userStore = userStore;

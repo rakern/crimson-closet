@@ -1,3 +1,5 @@
+/*PLEASE KEEP IN ALPHABETICAL ORDER*/
+
 :root{
     --primary-color: #9e1b32;
     --secondary-color: #828a8f;
@@ -14,9 +16,7 @@
     color: var(--primary-color);
 }
 
-.nav-link-custom{
-    color:var(--secondary-color);
-}
+
 
 .custom-ua-summary-error-message {
     color: var(--primary-color);
@@ -33,6 +33,11 @@
 .mw-login-form {
     max-width: 358px
 }
+
+.nav-link-custom {
+    color: var(--secondary-color);
+}
+
 .provider-logo {
     width: 20px;
     margin: 0 10px;

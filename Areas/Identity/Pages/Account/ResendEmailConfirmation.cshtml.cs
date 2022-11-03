@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using EmailService;
+using Services.EmailService;
 
 namespace crimson_closet.Areas.Identity.Pages.Account
 {
@@ -22,9 +22,9 @@ namespace crimson_closet.Areas.Identity.Pages.Account
     public class ResendEmailConfirmationModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly EmailService.IEmailSender _emailSender;
+        private readonly Services.EmailService.IEmailSender _emailSender;
 
-        public ResendEmailConfirmationModel(UserManager<ApplicationUser> userManager, EmailService.IEmailSender emailSender)
+        public ResendEmailConfirmationModel(UserManager<ApplicationUser> userManager, Services.EmailService.IEmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;

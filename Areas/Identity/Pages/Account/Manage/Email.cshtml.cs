@@ -8,13 +8,12 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using crimson_closet.Areas.Identity.Data;
-using EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using EmailService;
+using Services.EmailService;
 
 namespace crimson_closet.Areas.Identity.Pages.Account.Manage
 {
@@ -22,12 +21,12 @@ namespace crimson_closet.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly EmailService.IEmailSender _emailSender;
+        private readonly Services.EmailService.IEmailSender _emailSender;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            EmailService.IEmailSender emailSender)
+            Services.EmailService.IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;

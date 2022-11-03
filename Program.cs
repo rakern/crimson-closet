@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using crimson_closet.Data;
 using crimson_closet.Areas.Identity.Data;
-using EmailService;
+using Services.EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 //hide the connection stirng in an envirment varibale for protection
