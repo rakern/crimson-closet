@@ -42,6 +42,20 @@
     width: 20px;
     margin: 0 10px;
 }
+.register-container-main{
+    width:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.register-btn-max-width {
+    max-width:400px;
+    
+}
+.register-sizing-container {
+    width: 100%;
+    max-width: 600px;
+}
 .vh-100 {
     height: 100vh;
 }
