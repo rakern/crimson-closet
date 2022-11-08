@@ -2,61 +2,62 @@
 @model ExternalLoginModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "_LayoutUA";
 }
 
-<h1>@ViewData["Title"]</h1>
-<h2 id="external-login-title">Associate your @Model.ProviderDisplayName account.</h2>
-<hr />
 
-<p id="external-login-description" class="text-info">
-    You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
-    Please enter an email address for this site below and click the Register button to finish
-    logging in.
-</p>
+<div class="register-container-main d-flex justify-content-center">
+    <div class="row register-sizing-container">
+        <div class="col-md-12">
+            <h2 id="external-login-title" class="text-center">Associate your @Model.ProviderDisplayName account.</h2>
+            <hr />
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <!--
+            <p id="external-login-description" class="success-message text-center">
+                You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
+                Please fill out other information below to complete your account.
+            </p>
+            <section class="mb-5">
+                <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="custom-ua-summary-error-message"></div>
 
-
-            <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" autocomplete="email" />
-                <label asp-for="Input.Email" class="form-label"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            -->
-            <div class="form-floating">
-                <input asp-for="Input.UserName" class="form-control" autocomplete="email" />
-                <label asp-for="Input.UserName" class="form-label"></label>
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.FirstName" class="form-control" autocomplete="email" />
-                <label asp-for="Input.FirstName" class="form-label"></label>
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.LastName" class="form-control" autocomplete="email" />
-                <label asp-for="Input.LastName" class="form-label"></label>
-                <span asp-validation-for="Input.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.CWID" class="form-control" autocomplete="email" />
-                <label asp-for="Input.CWID" class="form-label"></label>
-                <span asp-validation-for="Input.CWID" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="email" />
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Input.FirstName">First Name <span class="required-asterisk">*</span></label>
+                                <input asp-for="Input.FirstName" class="form-control" autocomplete="first-name" aria-required="true" placeholder="First Name" />
+                                <span asp-validation-for="Input.FirstName" class=""></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Input.LastName">Last Name <span class="required-asterisk">*</span></label>
+                                <input asp-for="Input.LastName" class="form-control" autocomplete="last-name" aria-required="true" placeholder="Last Name" />
+                                <span asp-validation-for="Input.LastName" class=""></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Input.UserName">Username <span class="required-asterisk">*</span></label>
+                                <input asp-for="Input.UserName" class="form-control"  aria-required="true" placeholder="UserName" />
+                                <span asp-validation-for="Input.UserName" class=""></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Input.PhoneNumber">Phone Number <span class="required-asterisk">*</span></label>
+                                <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="phone" aria-required="true" placeholder="Phone Number" />
+                                <span asp-validation-for="Input.PhoneNumber" class=""></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Input.CWID">CWID <span class="required-asterisk">*</span></label>
+                                <input asp-for="Input.CWID" class="form-control" aria-required="true" placeholder="CWID" />
+                                <span asp-validation-for="Input.CWID" class=""></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-crimson">Register</button>
+                </form>
+            </section>
+        </div>
     </div>
 </div>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
