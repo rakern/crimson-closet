@@ -181,6 +181,31 @@ namespace crimson_closet.Migrations
                     b.ToTable("CartItems");
                 });
 
+            modelBuilder.Entity("crimson_closet.Models.CustOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CheckOutDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("QuantOfItems")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReturnByDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("CustOrder");
+                });
+
             modelBuilder.Entity("crimson_closet.Models.Item", b =>
                 {
                     b.Property<Guid>("ItemId")
@@ -227,28 +252,6 @@ namespace crimson_closet.Migrations
                     b.HasKey("ItemTypeID");
 
                     b.ToTable("ItemType");
-                });
-
-            modelBuilder.Entity("crimson_closet.Models.CustOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CheckOutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("QuantOfItems")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ReturnByDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CustOrder");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -387,6 +390,15 @@ namespace crimson_closet.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.CustOrder", b =>
+                {
+                    b.HasOne("crimson_closet.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("crimson_closet.Models.Item", b =>

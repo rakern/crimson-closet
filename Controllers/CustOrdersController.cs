@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using crimson_closet.Data;
 using crimson_closet.Models;
 
-namespace crimson_closet.Views
+namespace crimson_closet.Controllers
 {
     public class CustOrdersController : Controller
     {
@@ -26,7 +26,7 @@ namespace crimson_closet.Views
         }
 
         // GET: CustOrders/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.CustOrder == null)
             {
@@ -58,6 +58,7 @@ namespace crimson_closet.Views
         {
             if (ModelState.IsValid)
             {
+                custOrder.Id = Guid.NewGuid();
                 _context.Add(custOrder);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,7 +67,7 @@ namespace crimson_closet.Views
         }
 
         // GET: CustOrders/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.CustOrder == null)
             {
@@ -86,7 +87,7 @@ namespace crimson_closet.Views
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,QuantOfItems,CheckOutDate,ReturnByDate")] CustOrder custOrder)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,QuantOfItems,CheckOutDate,ReturnByDate")] CustOrder custOrder)
         {
             if (id != custOrder.Id)
             {
@@ -117,7 +118,7 @@ namespace crimson_closet.Views
         }
 
         // GET: CustOrders/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.CustOrder == null)
             {
@@ -137,7 +138,7 @@ namespace crimson_closet.Views
         // POST: CustOrders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             if (_context.CustOrder == null)
             {
@@ -153,7 +154,7 @@ namespace crimson_closet.Views
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustOrderExists(int id)
+        private bool CustOrderExists(Guid id)
         {
           return _context.CustOrder.Any(e => e.Id == id);
         }

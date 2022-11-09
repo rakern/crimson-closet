@@ -20,7 +20,7 @@
 crimson-color {
     color: var(--primary-color);
 }
-.corner-logo {
+#corner-logo {
     width: 250px;
     height: 100px;
 }
