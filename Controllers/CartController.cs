@@ -10,86 +10,88 @@ using crimson_closet.Models;
 
 namespace crimson_closet.Controllers
 {
-    public class ItemTypesController : Controller
+    public class CartController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbcontext;
 
-        public ItemTypesController(ApplicationDbContext context)
+        public CartController(ApplicationDbContext context)
         {
-            _context = context;
+            _dbcontext = context;
         }
 
-        // GET: ItemTypes
+        // GET: Cart
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ItemType.ToListAsync());
+              return View(await _dbcontext.Cart.ToListAsync());
         }
 
-        // GET: ItemTypes/Details/5
+        // GET: Cart/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.ItemType == null)
+            if (id == null || _dbcontext.Cart == null)
             {
                 return NotFound();
             }
 
-            var itemType = await _context.ItemType
-                .FirstOrDefaultAsync(m => m.ItemTypeID == id);
-            if (itemType == null)
+            var cart = await _dbcontext.Cart
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (cart == null)
             {
                 return NotFound();
             }
 
-            return View(itemType);
+            return View(cart);
         }
 
-        // GET: ItemTypes/Create
+        // GET: Cart/Create
         public IActionResult Create()
         {
+            //Adds to ViewBag all of the Users and Roles with Id as the identifier and the UserName/Name as the display
+            ViewData["UserId"] = new SelectList(_dbcontext.Users, "Id", "UserName");
             return View();
         }
 
-        // POST: ItemTypes/Create
+        // POST: Cart/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemTypeID,ItemDescription")] ItemType itemType)
+        public async Task<IActionResult> Create([Bind("Id,CreatedDate,ExpiredDate")] Cart cart)
         {
             if (ModelState.IsValid)
             {
-                itemType.ItemTypeID = Guid.NewGuid();
-                _context.Add(itemType);
-                await _context.SaveChangesAsync();
+                cart.Id = Guid.NewGuid();
+                _dbcontext.Add(cart);
+                await _dbcontext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(itemType);
+            return View(cart);
         }
 
-        // GET: ItemTypes/Edit/5
+        // GET: Cart/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.ItemType == null)
+            if (id == null || _dbcontext.Cart == null)
             {
                 return NotFound();
             }
 
-            var itemType = await _context.ItemType.FindAsync(id);
-            if (itemType == null)
+            var cart = await _dbcontext.Cart.FindAsync(id);
+            if (cart == null)
             {
                 return NotFound();
             }
-            return View(itemType);
+            return View(cart);
         }
 
-        // POST: ItemTypes/Edit/5
+        // POST: Cart/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ItemTypeID,ItemDescription")] ItemType itemType)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,CreatedDate,ExpiredDate")] Cart cart)
         {
-            if (id != itemType.ItemTypeID)
+            if (id != cart.Id)
             {
                 return NotFound();
             }
@@ -98,12 +100,12 @@ namespace crimson_closet.Controllers
             {
                 try
                 {
-                    _context.Update(itemType);
-                    await _context.SaveChangesAsync();
+                    _dbcontext.Update(cart);
+                    await _dbcontext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemTypeExists(itemType.ItemTypeID))
+                    if (!CartExists(cart.Id))
                     {
                         return NotFound();
                     }
@@ -114,49 +116,49 @@ namespace crimson_closet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(itemType);
+            return View(cart);
         }
 
-        // GET: ItemTypes/Delete/5
+        // GET: Cart/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.ItemType == null)
+            if (id == null || _dbcontext.Cart == null)
             {
                 return NotFound();
             }
 
-            var itemType = await _context.ItemType
-                .FirstOrDefaultAsync(m => m.ItemTypeID == id);
-            if (itemType == null)
+            var cart = await _dbcontext.Cart
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (cart == null)
             {
                 return NotFound();
             }
 
-            return View(itemType);
+            return View(cart);
         }
 
-        // POST: ItemTypes/Delete/5
+        // POST: Cart/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.ItemType == null)
+            if (_dbcontext.Cart == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.ItemType'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Cart'  is null.");
             }
-            var itemType = await _context.ItemType.FindAsync(id);
-            if (itemType != null)
+            var cart = await _dbcontext.Cart.FindAsync(id);
+            if (cart != null)
             {
-                _context.ItemType.Remove(itemType);
+                _dbcontext.Cart.Remove(cart);
             }
-
-            await _context.SaveChangesAsync();
+            
+            await _dbcontext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ItemTypeExists(Guid id)
+        private bool CartExists(Guid id)
         {
-            return _context.ItemType.Any(e => e.ItemTypeID == id);
+          return _dbcontext.Cart.Any(e => e.Id == id);
         }
     }
 }

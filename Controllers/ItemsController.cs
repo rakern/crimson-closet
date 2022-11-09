@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using crimson_closet.Areas.Identity.Data;
 using crimson_closet.Data;
+using crimson_closet.Models;
 
 namespace crimson_closet.Controllers
 {
