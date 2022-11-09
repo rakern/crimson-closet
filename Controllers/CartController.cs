@@ -7,22 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using crimson_closet.Data;
 using crimson_closet.Models;
+using crimson_closet.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace crimson_closet.Controllers
 {
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _dbcontext;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CartController(ApplicationDbContext context)
+        public CartController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _dbcontext = context;
+            _userManager = userManager;
         }
 
         // GET: Cart
         public async Task<IActionResult> Index()
         {
-              return View(await _dbcontext.Cart.ToListAsync());
+            
+              return View(await _dbcontext.Cart.Include(i=>i.ApplicationUser).ToListAsync());
         }
 
         // GET: Cart/Details/5
@@ -46,7 +51,7 @@ namespace crimson_closet.Controllers
         // GET: Cart/Create
         public IActionResult Create()
         {
-            //Adds to ViewBag all of the Users and Roles with Id as the identifier and the UserName/Name as the display
+            //Adds to ViewBag all of the Users with Id as the identifier and the UserName/Name as the display
             ViewData["UserId"] = new SelectList(_dbcontext.Users, "Id", "UserName");
             return View();
         }
@@ -56,7 +61,7 @@ namespace crimson_closet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CreatedDate,ExpiredDate")] Cart cart)
+        public async Task<IActionResult> Create([Bind("Id,ApplicationUserId,CreatedDate,ExpiredDate")] Cart cart)
         {
             if (ModelState.IsValid)
             {
@@ -139,14 +144,16 @@ namespace crimson_closet.Controllers
 
         // POST: Cart/Delete/5
         [HttpPost, ActionName("Delete")]
+        //We pass in both the UserId and RoleId to know which record to delete since they are both together the primary keys
+        [Route("/Cart/Delete/:CartId", Name = "deleteCart")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid CartId)
         {
             if (_dbcontext.Cart == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Cart'  is null.");
             }
-            var cart = await _dbcontext.Cart.FindAsync(id);
+            var cart = await _dbcontext.Cart.FindAsync(CartId);
             if (cart != null)
             {
                 _dbcontext.Cart.Remove(cart);

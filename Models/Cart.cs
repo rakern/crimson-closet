@@ -7,8 +7,10 @@ namespace crimson_closet.Models
     {
         public Guid Id { get; set; }
 
-        
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+
         public DateTime CreatedDate { get; set; }
         public DateTime ExpiredDate { get; set; }
 

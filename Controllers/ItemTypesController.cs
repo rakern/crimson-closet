@@ -12,28 +12,28 @@ namespace crimson_closet.Controllers
 {
     public class ItemTypesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbcontext;
 
         public ItemTypesController(ApplicationDbContext context)
         {
-            _context = context;
+            _dbcontext = context;
         }
 
         // GET: ItemTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ItemType.ToListAsync());
+            return View(await _dbcontext.ItemType.ToListAsync());
         }
 
         // GET: ItemTypes/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.ItemType == null)
+            if (id == null || _dbcontext.ItemType == null)
             {
                 return NotFound();
             }
 
-            var itemType = await _context.ItemType
+            var itemType = await _dbcontext.ItemType
                 .FirstOrDefaultAsync(m => m.ItemTypeID == id);
             if (itemType == null)
             {
@@ -59,8 +59,8 @@ namespace crimson_closet.Controllers
             if (ModelState.IsValid)
             {
                 itemType.ItemTypeID = Guid.NewGuid();
-                _context.Add(itemType);
-                await _context.SaveChangesAsync();
+                _dbcontext.Add(itemType);
+                await _dbcontext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(itemType);
@@ -69,12 +69,12 @@ namespace crimson_closet.Controllers
         // GET: ItemTypes/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.ItemType == null)
+            if (id == null || _dbcontext.ItemType == null)
             {
                 return NotFound();
             }
 
-            var itemType = await _context.ItemType.FindAsync(id);
+            var itemType = await _dbcontext.ItemType.FindAsync(id);
             if (itemType == null)
             {
                 return NotFound();
@@ -98,8 +98,8 @@ namespace crimson_closet.Controllers
             {
                 try
                 {
-                    _context.Update(itemType);
-                    await _context.SaveChangesAsync();
+                    _dbcontext.Update(itemType);
+                    await _dbcontext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -120,12 +120,12 @@ namespace crimson_closet.Controllers
         // GET: ItemTypes/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.ItemType == null)
+            if (id == null || _dbcontext.ItemType == null)
             {
                 return NotFound();
             }
 
-            var itemType = await _context.ItemType
+            var itemType = await _dbcontext.ItemType
                 .FirstOrDefaultAsync(m => m.ItemTypeID == id);
             if (itemType == null)
             {
@@ -140,23 +140,23 @@ namespace crimson_closet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.ItemType == null)
+            if (_dbcontext.ItemType == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.ItemType'  is null.");
             }
-            var itemType = await _context.ItemType.FindAsync(id);
+            var itemType = await _dbcontext.ItemType.FindAsync(id);
             if (itemType != null)
             {
-                _context.ItemType.Remove(itemType);
+                _dbcontext.ItemType.Remove(itemType);
             }
 
-            await _context.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ItemTypeExists(Guid id)
         {
-            return _context.ItemType.Any(e => e.ItemTypeID == id);
+            return _dbcontext.ItemType.Any(e => e.ItemTypeID == id);
         }
     }
 }

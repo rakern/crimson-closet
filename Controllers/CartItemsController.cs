@@ -12,28 +12,29 @@ namespace crimson_closet.Controllers
 {
     public class CartItemsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbcontext;
 
         public CartItemsController(ApplicationDbContext context)
         {
-            _context = context;
+            _dbcontext = context;
         }
 
         // GET: CartItems
         public async Task<IActionResult> Index()
         {
-              return View(await _context.CartItems.ToListAsync());
+            //Use Then include to get a sub object of the subobject
+              return View(await _dbcontext.CartItems.Include(i => i.Cart).ThenInclude(j=>j.ApplicationUser).Include(i => i.Item).ToListAsync());
         }
 
         // GET: CartItems/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.CartItems == null)
+            if (id == null || _dbcontext.CartItems == null)
             {
                 return NotFound();
             }
 
-            var cartItems = await _context.CartItems
+            var cartItems = await _dbcontext.CartItems
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cartItems == null)
             {
@@ -46,6 +47,10 @@ namespace crimson_closet.Controllers
         // GET: CartItems/Create
         public IActionResult Create()
         {
+            //Adds to ViewBag all of the Carts and corresponding User with Id as the identifier and the UserName/Name as the display
+            ViewData["CartId"] = new SelectList(_dbcontext.Cart.Include(i=>i.ApplicationUser), "Id", "ApplicationUser.LastName");
+            //Adds to ViewBag all of the Carts and corresponding User with Id as the identifier and the UserName/Name as the display
+            ViewData["ItemId"] = new SelectList(_dbcontext.Item, "ItemId", "ItemCode");
             return View();
         }
 
@@ -54,13 +59,13 @@ namespace crimson_closet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] CartItems cartItems)
+        public async Task<IActionResult> Create([Bind("CartId,ItemId")] CartItems cartItems)
         {
             if (ModelState.IsValid)
             {
                 cartItems.Id = Guid.NewGuid();
-                _context.Add(cartItems);
-                await _context.SaveChangesAsync();
+                _dbcontext.Add(cartItems);
+                await _dbcontext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(cartItems);
@@ -69,12 +74,12 @@ namespace crimson_closet.Controllers
         // GET: CartItems/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.CartItems == null)
+            if (id == null || _dbcontext.CartItems == null)
             {
                 return NotFound();
             }
 
-            var cartItems = await _context.CartItems.FindAsync(id);
+            var cartItems = await _dbcontext.CartItems.FindAsync(id);
             if (cartItems == null)
             {
                 return NotFound();
@@ -98,8 +103,8 @@ namespace crimson_closet.Controllers
             {
                 try
                 {
-                    _context.Update(cartItems);
-                    await _context.SaveChangesAsync();
+                    _dbcontext.Update(cartItems);
+                    await _dbcontext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -120,12 +125,12 @@ namespace crimson_closet.Controllers
         // GET: CartItems/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.CartItems == null)
+            if (id == null || _dbcontext.CartItems == null)
             {
                 return NotFound();
             }
 
-            var cartItems = await _context.CartItems
+            var cartItems = await _dbcontext.CartItems
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cartItems == null)
             {
@@ -140,23 +145,23 @@ namespace crimson_closet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.CartItems == null)
+            if (_dbcontext.CartItems == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.CartItems'  is null.");
             }
-            var cartItems = await _context.CartItems.FindAsync(id);
+            var cartItems = await _dbcontext.CartItems.FindAsync(id);
             if (cartItems != null)
             {
-                _context.CartItems.Remove(cartItems);
+                _dbcontext.CartItems.Remove(cartItems);
             }
             
-            await _context.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CartItemsExists(Guid id)
         {
-          return _context.CartItems.Any(e => e.Id == id);
+          return _dbcontext.CartItems.Any(e => e.Id == id);
         }
     }
 }

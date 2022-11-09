@@ -13,8 +13,16 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             <div class="form-group">
+                <label asp-for="CartId" class="control-label">Last Name of Cart Owner</label>
+                <select asp-for="CartId" class="form-control" asp-items="ViewBag.CartId"></select>
+            </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <label asp-for="ItemId" class="control-label">Item Name</label>
+                <select asp-for="ItemId" class="form-control" asp-items="ViewBag.ItemId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-crimson" />
             </div>
         </form>
     </div>

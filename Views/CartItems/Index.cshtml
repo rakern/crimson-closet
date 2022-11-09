@@ -13,18 +13,52 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                Cart Owner
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item.ItemCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item.ItemBrand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item.ItemSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item.ItemColor)
+            </th>
+           
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cart.ApplicationUser.FirstName ) @Html.DisplayFor(modelItem => item.Cart.ApplicationUser.LastName )
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item.ItemCode)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item.ItemBrand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item.ItemSize)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item.ItemColor)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
