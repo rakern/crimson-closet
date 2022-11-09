@@ -3,6 +3,7 @@
 :root{
     --primary-color: #9e1b32;
     --secondary-color: #828a8f;
+    --success-color: green;
 }
 
 .account-manage-container {
@@ -16,6 +17,9 @@
     color: var(--primary-color);
 }
 
+crimson-color {
+    color: var(--primary-color);
+}
 .corner-logo {
     width: 250px;
     height: 100px;
@@ -63,6 +67,9 @@
 .register-sizing-container {
     width: 100%;
     max-width: 600px;
+}
+.success-message{
+    color:var(--success-color);
 }
 .vh-100 {
     height: 100vh;

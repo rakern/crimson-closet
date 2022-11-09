@@ -1,0 +1,68 @@
+﻿@model Item
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LayoutUA.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Item</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemStatus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemStatus)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemBrand)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemBrand)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemSize)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemSize)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemColor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemColor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemPhoto)
+        </dt>
+        <dd>
+            @if (Model.ItemPhoto != null)
+            {
+                var base64 = Convert.ToBase64String(Model.ItemPhoto);
+                var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
+                <img src="@imgSrc" height="100" width="100" style="border-radius:50%" />
+
+                //<img width="100" height="100" src="@Url.Action("GetActorPhoto", "Actors", new {item.ActorId})" />
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemType.ItemDescription)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ItemId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

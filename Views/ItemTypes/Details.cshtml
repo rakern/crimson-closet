@@ -1,0 +1,25 @@
+﻿@model ItemType
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LayoutUA.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ItemType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemDescription)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ItemTypeID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
