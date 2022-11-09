@@ -12,8 +12,8 @@ using crimson_closet.Data;
 namespace crimson_closet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221109174747_newcartandCartItemsTables")]
-    partial class newcartandCartItemsTables
+    [Migration("20221109195337_cart")]
+    partial class cart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,7 +140,7 @@ namespace crimson_closet.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("crimson_closet.Models.Cart", b =>
+            modelBuilder.Entity("crimson_closet.Models.CartItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -149,38 +149,16 @@ namespace crimson_closet.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpiredDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Cart");
-                });
-
-            modelBuilder.Entity("crimson_closet.Models.CartItems", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CartId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ItemId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("crimson_closet.Models.CustOrder", b =>
@@ -370,22 +348,11 @@ namespace crimson_closet.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("crimson_closet.Models.Cart", b =>
+            modelBuilder.Entity("crimson_closet.Models.CartItem", b =>
                 {
                     b.HasOne("crimson_closet.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("crimson_closet.Models.CartItems", b =>
-                {
-                    b.HasOne("crimson_closet.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("crimson_closet.Models.Item", "Item")
                         .WithMany()
@@ -393,7 +360,7 @@ namespace crimson_closet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cart");
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Item");
                 });

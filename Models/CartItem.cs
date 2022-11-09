@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace crimson_closet.Models
 {
-    public class Cart
+    public class CartItem
     {
         public Guid Id { get; set; }
 
@@ -11,8 +11,9 @@ namespace crimson_closet.Models
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-        public DateTime CreatedDate { get; set; }
-        public DateTime ExpiredDate { get; set; }
+        [ForeignKey("ItemId")]
+        public Guid ItemId { get; set; }
+        public Item Item { get; set; }
 
     }
 }
