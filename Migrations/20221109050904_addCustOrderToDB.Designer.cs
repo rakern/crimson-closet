@@ -12,8 +12,8 @@ using crimson_closet.Data;
 namespace crimson_closet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221024175020_newdb")]
-    partial class newdb
+    [Migration("20221109050904_addCustOrderToDB")]
+    partial class addCustOrderToDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,6 +58,9 @@ namespace crimson_closet.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("CWID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -135,6 +138,122 @@ namespace crimson_closet.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.Cart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiredDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Cart");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.CartItems", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("CartItems");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.CustOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CheckOutDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("QuantOfItems")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReturnByDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("CustOrder");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.Item", b =>
+                {
+                    b.Property<Guid>("ItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ItemBrand")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItemCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItemColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("ItemPhoto")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ItemSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ItemStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ItemTypeID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ItemId");
+
+                    b.HasIndex("ItemTypeID");
+
+                    b.ToTable("Item");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.ItemType", b =>
+                {
+                    b.Property<Guid>("ItemTypeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ItemDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ItemTypeID");
+
+                    b.ToTable("ItemType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -249,6 +368,48 @@ namespace crimson_closet.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.Cart", b =>
+                {
+                    b.HasOne("crimson_closet.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.CartItems", b =>
+                {
+                    b.HasOne("crimson_closet.Models.Cart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId");
+
+                    b.HasOne("crimson_closet.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId");
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.CustOrder", b =>
+                {
+                    b.HasOne("crimson_closet.Areas.Identity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.Item", b =>
+                {
+                    b.HasOne("crimson_closet.Models.ItemType", "ItemType")
+                        .WithMany()
+                        .HasForeignKey("ItemTypeID");
+
+                    b.Navigation("ItemType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

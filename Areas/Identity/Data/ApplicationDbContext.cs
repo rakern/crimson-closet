@@ -41,4 +41,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Item> Item { get; set; }
     public DbSet<crimson_closet.Models.Cart> Cart { get; set; }
     public DbSet<crimson_closet.Models.CartItems> CartItems { get; set; }
+    public DbSet<crimson_closet.Models.CustOrder> CustOrder { get; set; }
 }

@@ -21,6 +21,11 @@ crimson-color {
     color: var(--primary-color);
 }
 
+#corner-logo {
+    width: 100px;
+    height: 100px;
+}
+
 .custom-ua-summary-error-message {
     color: var(--primary-color);
 }
@@ -33,6 +38,18 @@ crimson-color {
 .custom-ua-error-message{
     color:var(--primary-color);
 }
+
+#flush-left-list {
+    list-style: none;
+    text-align: left;
+}
+
+#flush-right-list {
+    list-style: none;
+    text-align: right;
+    background-position: 100%;
+}
+
 .mw-login-form {
     max-width: 358px
 }
@@ -40,6 +57,11 @@ crimson-color {
 .nav-link-custom {
     color: var(--secondary-color);
 }
+
+/*.navbar-brand {
+    width: 250px;
+    height: 100px;
+}*/
 
 .provider-logo {
     width: 20px;
