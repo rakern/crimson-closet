@@ -21,7 +21,7 @@ crimson-color {
     color: var(--primary-color);
 }
 #corner-logo {
-    width: 250px;
+    width: 100px;
     height: 100px;
 }
 
