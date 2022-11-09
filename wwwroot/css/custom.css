@@ -20,6 +20,7 @@
 crimson-color {
     color: var(--primary-color);
 }
+
 #corner-logo {
     width: 100px;
     height: 100px;
@@ -37,6 +38,18 @@ crimson-color {
 .custom-ua-error-message{
     color:var(--primary-color);
 }
+
+#flush-left-list {
+    list-style: none;
+    text-align: left;
+}
+
+#flush-right-list {
+    list-style: none;
+    text-align: right;
+    background-position: 100%;
+}
+
 .mw-login-form {
     max-width: 358px
 }
