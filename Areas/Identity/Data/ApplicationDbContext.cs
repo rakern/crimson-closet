@@ -37,4 +37,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         : base(options)
     {
     }
+    public DbSet<crimson_closet.Models.CustOrder> CustOrder { get; set; }
 }

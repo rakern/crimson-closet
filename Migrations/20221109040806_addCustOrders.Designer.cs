@@ -12,8 +12,8 @@ using crimson_closet.Data;
 namespace crimson_closet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221024175020_newdb")]
-    partial class newdb
+    [Migration("20221109040806_addCustOrders")]
+    partial class addCustOrders
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,6 +58,9 @@ namespace crimson_closet.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("CWID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -135,6 +138,28 @@ namespace crimson_closet.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.CustOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CheckOutDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("QuantOfItems")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReturnByDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustOrder");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

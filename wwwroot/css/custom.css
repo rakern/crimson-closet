@@ -16,7 +16,10 @@
     color: var(--primary-color);
 }
 
-
+.corner-logo {
+    width: 250px;
+    height: 100px;
+}
 
 .custom-ua-summary-error-message {
     color: var(--primary-color);
@@ -37,6 +40,11 @@
 .nav-link-custom {
     color: var(--secondary-color);
 }
+
+/*.navbar-brand {
+    width: 250px;
+    height: 100px;
+}*/
 
 .provider-logo {
     width: 20px;
