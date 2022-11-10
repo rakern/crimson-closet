@@ -69,6 +69,27 @@ namespace crimson_closet.Controllers
             return View(detailsUser_VM);
         }
 
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null || _userManager == null)
+            {
+                return NotFound();
+            }
+
+            //Get the user from id
+            var user = await _userManager.Users
+                .FirstOrDefaultAsync(m => m.Id == id.ToString());
+           
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            await _userManager.DeleteAsync(user);
+
+            return View();
+        }
+
 
 
     }

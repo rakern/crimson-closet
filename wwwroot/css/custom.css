@@ -3,6 +3,7 @@
 :root{
     --primary-color: #9e1b32;
     --secondary-color: #828a8f;
+    --success-color: green;
 }
 
 .account-manage-container {
@@ -16,7 +17,14 @@
     color: var(--primary-color);
 }
 
+crimson-color {
+    color: var(--primary-color);
+}
 
+#corner-logo {
+    width: 100px;
+    height: 100px;
+}
 
 .custom-ua-summary-error-message {
     color: var(--primary-color);
@@ -30,6 +38,18 @@
 .custom-ua-error-message{
     color:var(--primary-color);
 }
+
+#flush-left-list {
+    list-style: none;
+    text-align: left;
+}
+
+#flush-right-list {
+    list-style: none;
+    text-align: right;
+    background-position: 100%;
+}
+
 .mw-login-form {
     max-width: 358px
 }
@@ -37,6 +57,11 @@
 .nav-link-custom {
     color: var(--secondary-color);
 }
+
+/*.navbar-brand {
+    width: 250px;
+    height: 100px;
+}*/
 
 .provider-logo {
     width: 20px;
@@ -55,6 +80,9 @@
 .register-sizing-container {
     width: 100%;
     max-width: 600px;
+}
+.success-message{
+    color:var(--success-color);
 }
 .vh-100 {
     height: 100vh;

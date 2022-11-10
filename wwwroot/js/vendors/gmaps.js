@@ -182,12 +182,12 @@ var GMaps = (function(global) {
 
     var self = this,
         i,
-        events_that_hide_context_menu = [
+        events_that_hide_dbcontext_menu = [
           'bounds_changed', 'center_changed', 'click', 'dblclick', 'drag',
           'dragend', 'dragstart', 'idle', 'maptypeid_changed', 'projection_changed',
           'resize', 'tilesloaded', 'zoom_changed'
         ],
-        events_that_doesnt_hide_context_menu = ['mousemove', 'mouseout', 'mouseover'],
+        events_that_doesnt_hide_dbcontext_menu = ['mousemove', 'mouseout', 'mouseover'],
         options_to_be_deleted = ['el', 'lat', 'lng', 'mapType', 'width', 'height', 'markerClusterer', 'enableNewStyle'],
         identifier = options.el || options.div,
         markerClustererFunction = options.markerClusterer,
@@ -271,12 +271,12 @@ var GMaps = (function(global) {
 
     map_options = extend_object(map_base_options, options);
 
-    for (i = 0; i < events_that_hide_context_menu.length; i++) {
-      delete map_options[events_that_hide_context_menu[i]];
+    for (i = 0; i < events_that_hide_dbcontext_menu.length; i++) {
+      delete map_options[events_that_hide_dbcontext_menu[i]];
     }
 
-    for (i = 0; i < events_that_doesnt_hide_context_menu.length; i++) {
-      delete map_options[events_that_doesnt_hide_context_menu[i]];
+    for (i = 0; i < events_that_doesnt_hide_dbcontext_menu.length; i++) {
+      delete map_options[events_that_doesnt_hide_dbcontext_menu[i]];
     }
 
     this.map = new google.maps.Map(this.el, map_options);
@@ -297,9 +297,9 @@ var GMaps = (function(global) {
         }
       }
 
-      if (!getElementById('gmaps_context_menu')) return;
+      if (!getElementById('gmaps_dbcontext_menu')) return;
 
-      var context_menu_element = getElementById('gmaps_context_menu');
+      var context_menu_element = getElementById('gmaps_dbcontext_menu');
 
       context_menu_element.innerHTML = html;
 
@@ -351,7 +351,7 @@ var GMaps = (function(global) {
         buildContextMenuHTML(control, e);
       }
 
-      var context_menu_element = getElementById('gmaps_context_menu');
+      var context_menu_element = getElementById('gmaps_dbcontext_menu');
 
       setTimeout(function() {
         context_menu_element.style.display = 'block';
@@ -375,7 +375,7 @@ var GMaps = (function(global) {
         }
       }
 
-      ul.id = 'gmaps_context_menu';
+      ul.id = 'gmaps_dbcontext_menu';
       ul.style.display = 'none';
       ul.style.position = 'absolute';
       ul.style.minWidth = '100px';
@@ -384,11 +384,11 @@ var GMaps = (function(global) {
       ul.style.padding = '8px';
       ul.style.boxShadow = '2px 2px 6px #ccc';
 
-      if (!getElementById('gmaps_context_menu')) {
+      if (!getElementById('gmaps_dbcontext_menu')) {
         doc.body.appendChild(ul);
       }
 
-      var context_menu_element = getElementById('gmaps_context_menu');
+      var context_menu_element = getElementById('gmaps_dbcontext_menu');
 
       google.maps.event.addDomListener(context_menu_element, 'mouseout', function(ev) {
         if (!ev.relatedTarget || !this.contains(ev.relatedTarget)) {
@@ -400,7 +400,7 @@ var GMaps = (function(global) {
     };
 
     this.hideContextMenu = function() {
-      var context_menu_element = getElementById('gmaps_context_menu');
+      var context_menu_element = getElementById('gmaps_dbcontext_menu');
 
       if (context_menu_element) {
         context_menu_element.style.display = 'none';
@@ -422,16 +422,16 @@ var GMaps = (function(global) {
     //google.maps.event.addListener(this.map, 'idle', this.hideContextMenu);
     google.maps.event.addListener(this.map, 'zoom_changed', this.hideContextMenu);
 
-    for (var ev = 0; ev < events_that_hide_context_menu.length; ev++) {
-      var name = events_that_hide_context_menu[ev];
+    for (var ev = 0; ev < events_that_hide_dbcontext_menu.length; ev++) {
+      var name = events_that_hide_dbcontext_menu[ev];
 
       if (name in options) {
         setupListener(this.map, name);
       }
     }
 
-    for (var ev = 0; ev < events_that_doesnt_hide_context_menu.length; ev++) {
-      var name = events_that_doesnt_hide_context_menu[ev];
+    for (var ev = 0; ev < events_that_doesnt_hide_dbcontext_menu.length; ev++) {
+      var name = events_that_doesnt_hide_dbcontext_menu[ev];
 
       if (name in options) {
         setupListener(this.map, name);

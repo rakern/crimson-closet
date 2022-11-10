@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace crimson_closet.Areas.Identity.Data
+namespace crimson_closet.Models
 {
     public enum ItemStatus
     {
@@ -24,6 +24,7 @@ namespace crimson_closet.Areas.Identity.Data
         public Guid? ItemTypeID { get; set; }
 
         // navigational property for foreign key
+        [ForeignKey("ItemTypeID")]
         public virtual ItemType? ItemType { get; set; }
     }
 }

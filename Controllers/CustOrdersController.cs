@@ -10,86 +10,86 @@ using crimson_closet.Models;
 
 namespace crimson_closet.Controllers
 {
-    public class ItemTypesController : Controller
+    public class CustOrdersController : Controller
     {
-        private readonly ApplicationDbContext _dbcontext;
+        private readonly ApplicationDbContext _context;
 
-        public ItemTypesController(ApplicationDbContext context)
+        public CustOrdersController(ApplicationDbContext context)
         {
-            _dbcontext = context;
+            _context = context;
         }
 
-        // GET: ItemTypes
+        // GET: CustOrders
         public async Task<IActionResult> Index()
         {
-            return View(await _dbcontext.ItemType.ToListAsync());
+              return View(await _context.CustOrder.ToListAsync());
         }
 
-        // GET: ItemTypes/Details/5
+        // GET: CustOrders/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _dbcontext.ItemType == null)
+            if (id == null || _context.CustOrder == null)
             {
                 return NotFound();
             }
 
-            var itemType = await _dbcontext.ItemType
-                .FirstOrDefaultAsync(m => m.ItemTypeID == id);
-            if (itemType == null)
+            var custOrder = await _context.CustOrder
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (custOrder == null)
             {
                 return NotFound();
             }
 
-            return View(itemType);
+            return View(custOrder);
         }
 
-        // GET: ItemTypes/Create
+        // GET: CustOrders/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ItemTypes/Create
+        // POST: CustOrders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemTypeID,ItemDescription")] ItemType itemType)
+        public async Task<IActionResult> Create([Bind("Id,QuantOfItems,CheckOutDate,ReturnByDate")] CustOrder custOrder)
         {
             if (ModelState.IsValid)
             {
-                itemType.ItemTypeID = Guid.NewGuid();
-                _dbcontext.Add(itemType);
-                await _dbcontext.SaveChangesAsync();
+                custOrder.Id = Guid.NewGuid();
+                _context.Add(custOrder);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(itemType);
+            return View(custOrder);
         }
 
-        // GET: ItemTypes/Edit/5
+        // GET: CustOrders/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _dbcontext.ItemType == null)
+            if (id == null || _context.CustOrder == null)
             {
                 return NotFound();
             }
 
-            var itemType = await _dbcontext.ItemType.FindAsync(id);
-            if (itemType == null)
+            var custOrder = await _context.CustOrder.FindAsync(id);
+            if (custOrder == null)
             {
                 return NotFound();
             }
-            return View(itemType);
+            return View(custOrder);
         }
 
-        // POST: ItemTypes/Edit/5
+        // POST: CustOrders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ItemTypeID,ItemDescription")] ItemType itemType)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,QuantOfItems,CheckOutDate,ReturnByDate")] CustOrder custOrder)
         {
-            if (id != itemType.ItemTypeID)
+            if (id != custOrder.Id)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace crimson_closet.Controllers
             {
                 try
                 {
-                    _dbcontext.Update(itemType);
-                    await _dbcontext.SaveChangesAsync();
+                    _context.Update(custOrder);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemTypeExists(itemType.ItemTypeID))
+                    if (!CustOrderExists(custOrder.Id))
                     {
                         return NotFound();
                     }
@@ -114,49 +114,49 @@ namespace crimson_closet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(itemType);
+            return View(custOrder);
         }
 
-        // GET: ItemTypes/Delete/5
+        // GET: CustOrders/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _dbcontext.ItemType == null)
+            if (id == null || _context.CustOrder == null)
             {
                 return NotFound();
             }
 
-            var itemType = await _dbcontext.ItemType
-                .FirstOrDefaultAsync(m => m.ItemTypeID == id);
-            if (itemType == null)
+            var custOrder = await _context.CustOrder
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (custOrder == null)
             {
                 return NotFound();
             }
 
-            return View(itemType);
+            return View(custOrder);
         }
 
-        // POST: ItemTypes/Delete/5
+        // POST: CustOrders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_dbcontext.ItemType == null)
+            if (_context.CustOrder == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.ItemType'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.CustOrder'  is null.");
             }
-            var itemType = await _dbcontext.ItemType.FindAsync(id);
-            if (itemType != null)
+            var custOrder = await _context.CustOrder.FindAsync(id);
+            if (custOrder != null)
             {
-                _dbcontext.ItemType.Remove(itemType);
+                _context.CustOrder.Remove(custOrder);
             }
-
-            await _dbcontext.SaveChangesAsync();
+            
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ItemTypeExists(Guid id)
+        private bool CustOrderExists(Guid id)
         {
-            return _dbcontext.ItemType.Any(e => e.ItemTypeID == id);
+          return _context.CustOrder.Any(e => e.Id == id);
         }
     }
 }

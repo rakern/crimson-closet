@@ -1,0 +1,45 @@
+﻿@model IEnumerable<crimson_closet.Models.CartItem>
+
+@{
+    ViewData["Title"] = "CustomerCart";
+    Layout = "~/Views/Shared/_LayoutUA.cshtml";
+}
+
+<h2>CustomerCart</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var parms = new Dictionary<string, string>();
+            parms.Add("CartItemId", item.Id.ToString());
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemId)
+                </td>
+                <td>
+                    <form asp-action="Delete">
+                        <input asp-controller="CartItem" asp-action="Delete" asp-all-route-data="parms" type="submit" value="Delete" class="btn btn-crimson" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,56 @@
+﻿<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">crimson_closet</a>*@
+            <a class="navbar-brand" href="#">
+                <img alt="Crimson Closet" id="corner-logo" src="~/img/Crimson Closet.jpg" />
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul id="flush-left-list" class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Closet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="CustOrders" asp-action="Index">My Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="CartItem" asp-action="CustomerCart">Cart</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                @*add if statement to only display the below if user is already logged in*@
+                @*@if ()
+                {*@
+                    <ul id="flush-right-list" class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUsers" asp-action="Index">My Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Log Out</a>
+                        </li>
+                    </ul>
+                @*}else{
+                   <partial name="_LoginPartial"/>
+                }*@
+                
+            </div>
+
+            @*add an if statement here to display the partial below if its home screen, before use logs in*@
+            @*<partial name="_LoginPartial">*@
+
+        </div>
+    </nav>
+</header>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@

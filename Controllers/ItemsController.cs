@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using crimson_closet.Areas.Identity.Data;
 using crimson_closet.Data;
+using crimson_closet.Models;
 
 namespace crimson_closet.Controllers
 {
     public class ItemsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbcontext;
 
         public ItemsController(ApplicationDbContext context)
         {
-            _context = context;
+            _dbcontext = context;
         }
 
         public async Task<IActionResult> GetItemPhoto(Guid id)
         {
-            var item = await _context.Item.FirstOrDefaultAsync(m => m.ItemId == id);
+            var item = await _dbcontext.Item.FirstOrDefaultAsync(m => m.ItemId == id);
             if (item == null)
             {
                 return NotFound();
@@ -34,19 +34,19 @@ namespace crimson_closet.Controllers
         // GET: Items
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Item.Include(i => i.ItemType);
+            var applicationDbContext = _dbcontext.Item.Include(i => i.ItemType);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Items/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Item == null)
+            if (id == null || _dbcontext.Item == null)
             {
                 return NotFound();
             }
 
-            var item = await _context.Item
+            var item = await _dbcontext.Item
                 .Include(i => i.ItemType)
                 .FirstOrDefaultAsync(m => m.ItemId == id);
             if (item == null)
@@ -60,8 +60,8 @@ namespace crimson_closet.Controllers
         // GET: Items/Create
         public IActionResult Create()
         {
-            ViewData["ItemTypeID"] = new SelectList(_context.ItemType, "ItemTypeID", "ItemTypeID");
-            ViewData["ItemDescription"] = new SelectList(_context.ItemType, "ItemTypeID", "ItemDescription");
+            ViewData["ItemTypeID"] = new SelectList(_dbcontext.ItemType, "ItemTypeID", "ItemTypeID");
+            ViewData["ItemDescription"] = new SelectList(_dbcontext.ItemType, "ItemTypeID", "ItemDescription");
             return View();
         }
 
@@ -82,30 +82,30 @@ namespace crimson_closet.Controllers
                 }
 
                 item.ItemId = Guid.NewGuid();
-                _context.Add(item);
-                await _context.SaveChangesAsync();
+                _dbcontext.Add(item);
+                await _dbcontext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ItemTypeID"] = new SelectList(_context.ItemType, "ItemTypeID", "ItemTypeID", item.ItemTypeID);
-            ViewData["ItemDescription"] = new SelectList(_context.ItemType, "ItemTypeID", "ItemDescription");
+            ViewData["ItemTypeID"] = new SelectList(_dbcontext.ItemType, "ItemTypeID", "ItemTypeID", item.ItemTypeID);
+            ViewData["ItemDescription"] = new SelectList(_dbcontext.ItemType, "ItemTypeID", "ItemDescription");
             return View(item);
         }
 
         // GET: Items/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Item == null)
+            if (id == null || _dbcontext.Item == null)
             {
                 return NotFound();
             }
 
-            var item = await _context.Item.FindAsync(id);
+            var item = await _dbcontext.Item.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
             }
-            ViewData["ItemTypeID"] = new SelectList(_context.ItemType, "ItemTypeID", "ItemTypeID", item.ItemTypeID);
-            ViewData["ItemDescription"] = new SelectList(_context.ItemType, "ItemTypeID", "ItemDescription");
+            ViewData["ItemTypeID"] = new SelectList(_dbcontext.ItemType, "ItemTypeID", "ItemTypeID", item.ItemTypeID);
+            ViewData["ItemDescription"] = new SelectList(_dbcontext.ItemType, "ItemTypeID", "ItemDescription");
 
             return View(item);
         }
@@ -133,8 +133,8 @@ namespace crimson_closet.Controllers
                         item.ItemPhoto = memoryStream.ToArray();
                     }
 
-                    _context.Update(item);
-                    await _context.SaveChangesAsync();
+                    _dbcontext.Update(item);
+                    await _dbcontext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -149,20 +149,20 @@ namespace crimson_closet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ItemTypeID"] = new SelectList(_context.ItemType, "ItemTypeID", "ItemTypeID", item.ItemTypeID);
-            ViewData["ItemDescription"] = new SelectList(_context.ItemType, "ItemTypeID", "ItemDescription");
+            ViewData["ItemTypeID"] = new SelectList(_dbcontext.ItemType, "ItemTypeID", "ItemTypeID", item.ItemTypeID);
+            ViewData["ItemDescription"] = new SelectList(_dbcontext.ItemType, "ItemTypeID", "ItemDescription");
             return View(item);
         }
 
         // GET: Items/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Item == null)
+            if (id == null || _dbcontext.Item == null)
             {
                 return NotFound();
             }
 
-            var item = await _context.Item
+            var item = await _dbcontext.Item
                 .Include(i => i.ItemType)
                 .FirstOrDefaultAsync(m => m.ItemId == id);
             if (item == null)
@@ -178,23 +178,23 @@ namespace crimson_closet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Item == null)
+            if (_dbcontext.Item == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Item'  is null.");
             }
-            var item = await _context.Item.FindAsync(id);
+            var item = await _dbcontext.Item.FindAsync(id);
             if (item != null)
             {
-                _context.Item.Remove(item);
+                _dbcontext.Item.Remove(item);
             }
 
-            await _context.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ItemExists(Guid id)
         {
-            return _context.Item.Any(e => e.ItemId == id);
+            return _dbcontext.Item.Any(e => e.ItemId == id);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace crimson_closet.Areas.Identity.Data
+﻿namespace crimson_closet.Models
 {
     public class ItemType
     {
