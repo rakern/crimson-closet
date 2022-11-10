@@ -13,6 +13,11 @@
  
 }
 
+.card-image{
+    height:100%;
+    max-height: 200px;
+}
+
 .crimson-color-tabs .nav-link.active, .nav-link-custom:hover {
     color: var(--primary-color);
 }
