@@ -1,0 +1,11 @@
+﻿
+.login-container{
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto;
+}
+
+.provider-logo {
+    width: 20px;
+    margin: 2px 5px;
+}
