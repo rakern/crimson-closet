@@ -25,8 +25,10 @@
     <link rel="stylesheet" href="~/css/custom.css" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" href="~/css/colors.php?color=000000" type="text/css" />
+    <link rel="stylesheet" href="~/css/colors.css" type="text/css" />
     <link rel="stylesheet" href="~/custom-style.css" type="text/css" />
+
+   
 
     <!-- Document Title
     ============================================= -->
@@ -58,8 +60,8 @@
                         <!-- Logo
                         ============================================= -->
                         <div id="logo">
-                            <a class="standard-logo" asp-controller="Home" asp-action="Index"><img src="demos/ecommerce/images/logo.png" alt="Canvas Logo"></a>
-                            <a class="retina-logo" asp-controller="Home" asp-action="Index"><img src="demos/ecommerce/images/logo@2x.png" alt="Canvas Logo"></a>
+                            <a class="standard-logo" asp-controller="Home" asp-action="Index"><img src="~/demos/ecommerce/images/logo.png" alt="Canvas Logo"></a>
+                            <a class="retina-logo" asp-controller="Home" asp-action="Index"><img src="~/demos/ecommerce/images/logo@2x.png" alt="Canvas Logo"></a>
                         </div><!-- #logo end -->
 
                         <div class="header-misc align-items-lg-stretch">
@@ -77,8 +79,8 @@
                         <nav class="primary-menu style-ecommerce menu-spacing-margin">
 
                             <ul class="menu-container">
-                                <li class="menu-item current"><a class="menu-link" asp-controller="Home" asp-action="Index"><div>Home</div></a></li>
-                                <li class="menu-item mega-menu"><a class="menu-link" asp-controller="Items" asp-action="Index"><div>Closet</div></a></li>
+                                <li id="home-nav-link" class="menu-item"><a class="menu-link" asp-controller="Home" asp-action="Index"><div>Home</div></a></li>
+                                <li id="closet-nav-link" class="menu-item mega-menu"><a class="menu-link" asp-controller="Items" asp-action="Index"><div>Closet</div></a></li>
                                 <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" href="#"><div>Link1</div></a></li>
                                 <li class="menu-item"><a class="menu-link" href="#"><div>Link2</div></a></li>
                                 <li class="menu-item"><a class="menu-link" href="#"><div>Link3</div></a></li>
@@ -100,101 +102,102 @@
         @RenderBody()
 
         <!-- Footer
-        ============================================= -->
-        <footer id="footer" class="border-0 bg-transparent">
-
-            <div class="container clearfix">
+         ============================================= -->
+        <footer id="footer" class="dark " style="background-color: var(--primary-color);">
+            <div class="container">
 
                 <!-- Footer Widgets
                 ============================================= -->
-                <div class="footer-widgets-wrap clearfix" style="padding: 60px 0 100px;">
+                <div class="footer-widgets-wrap">
 
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-9">
+                            <div class="widget clearfix">
 
-                            <div class="row clearfix">
-                                <div class="col-lg-6">
-                                    <div class="widget widget_links widget-li-noicon">
-                                        <h4>Hire</h4>
-                                        <ul>
-                                            <li><a href="#">Documentation</a></li>
-                                            <li><a href="#">Feedback</a></li>
-                                            <li><a href="#">Plugins</a></li>
+                                <div class="row col-mb-30">
+                                    <div class="col-lg-3 col-6  ">
+                                        <ul style="list-style: none">
+                                            <li><a href="#">Home</a></li>
+                                            <li><a href="#">About</a></li>
+                                            <li><a href="#">FAQs</a></li>
+                                            <li><a href="#">Support</a></li>
+                                            <li><a href="#">Contact</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-lg-3 col-6 " >
+                                        <ul style="list-style: none">
+                                            <li><a href="#">Shop</a></li>
+                                            <li><a href="#">Portfolio</a></li>
+                                            <li><a href="#">Blog</a></li>
+                                            <li><a href="#">Events</a></li>
+                                            <li><a href="#">Forums</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-lg-3 col-6 ">
+                                        <ul style="list-style: none">
+                                            <li><a href="#">Corporate</a></li>
+                                            <li><a href="#">Agency</a></li>
+                                            <li><a href="#">eCommerce</a></li>
+                                            <li><a href="#">Personal</a></li>
+                                            <li><a href="#">One Page</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-lg-3 col-6 ">
+                                        <ul style="list-style: none">
+                                            <li><a href="#">Corporate</a></li>
+                                            <li><a href="#">Agency</a></li>
+                                            <li><a href="#">eCommerce</a></li>
+                                            <li><a href="#">Personal</a></li>
+                                            <li><a href="#">One Page</a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="widget widget_links widget-li-noicon">
-                                        <h4>Community</h4>
-                                        <ul>
-                                            <li><a href="#">Documentation</a></li>
-                                            <li><a href="#">Feedback</a></li>
-                                            <li><a href="#">Plugins</a></li>
-                                            <li><a href="#">Support Forums</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+
                             </div>
-
-                            <div class="clear"></div>
-
-                            <div class="line line-sm"></div>
-
-                            <div class="copy-link"><a href="mailto:noreply@canvas.com"><i class="icon-envelope2"></i>  info@canvas.com</a> <span class="middot"> | </span> <a href="tel:+1-11-6541-6369"><i class="icon-headphones"></i> +1-11-6541-6369</a> <span class="middot"> | </span> <a href="skype:CanvasOnSkype?call"><i class="icon-skype2"></i> CanvasOnSkype</a></div>
-
                         </div>
 
-                        <div class="col-lg-5 offset-lg-1">
+                        <div class="col-lg-3 mt-5 mt-lg-0 text-center text-lg-end">
+                            <div class="widget clearfix">
 
-                            <div class="widget">
-                                <h4>Connect Socially</h4>
-
-                                <div class="bottommargin-sm clearfix">
-                                    <a href="#" class="social-icon si-dark si-mini si-rounded si-facebook" title="Facebook">
-                                        <i class="icon-facebook"></i>
-                                        <i class="icon-facebook"></i>
-                                    </a>
-
-                                    <a href="#" class="social-icon si-dark si-mini si-rounded si-twitter" title="Twitter">
-                                        <i class="icon-twitter"></i>
-                                        <i class="icon-twitter"></i>
-                                    </a>
-
-                                    <a href="#" class="social-icon si-dark si-mini si-rounded si-instagram" title="Instagram">
-                                        <i class="icon-instagram"></i>
-                                        <i class="icon-instagram"></i>
-                                    </a>
-
-                                    <a href="#" class="social-icon si-dark si-mini si-rounded si-pinterest" title="Pinterest">
-                                        <i class="icon-pinterest"></i>
-                                        <i class="icon-pinterest"></i>
-                                    </a>
-
-                                    <a href="#" class="social-icon si-dark si-mini si-rounded si-vimeo" title="Vimeo">
-                                        <i class="icon-vimeo"></i>
-                                        <i class="icon-vimeo"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="widget subscribe-widget mt-0 clearfix">
-                                <h5><strong>Subscribe</strong> to Our Newsletter to get Important News, Amazing Offers &amp; Inside Scoops:</h5>
-                                <div class="widget-subscribe-form-result"></div>
-                                <form id="widget-subscribe-form" action="include/subscribe.php" method="post" class="mb-0">
-                                    <div class="input-group input-group-lg mx-auto">
-                                        <input type="email" id="widget-subscribe-form-email" name="widget-subscribe-form-email" class="form-control required email" placeholder="Enter your Email">
-                                        <button class="button button-black fw-light button-dark ls2 text-uppercase" type="submit">Subscribe</button>
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <small>Call Us:</small>
+                                        <h4 class="h4">+(1) 22 55412474</h4>
                                     </div>
-                                </form>
-                            </div>
 
+                                    <div class="col-12 d-flex justify-content-center justify-content-lg-end">
+                                        <a href="#" class="social-icon si-small si-light si-facebook">
+                                            <i class="icon-facebook"></i>
+                                            <i class="icon-facebook"></i>
+                                        </a>
+                                        <a href="#" class="social-icon si-small si-light si-delicious">
+                                            <i class="icon-delicious"></i>
+                                            <i class="icon-delicious"></i>
+                                        </a>
+                                        <a href="#" class="social-icon si-small si-light si-paypal">
+                                            <i class="icon-paypal"></i>
+                                            <i class="icon-paypal"></i>
+                                        </a>
+                                        <a href="#" class="social-icon si-small si-light si-flattr">
+                                            <i class="icon-flattr"></i>
+                                            <i class="icon-flattr"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 mt-5 text-white-50 text-smaller">
+                                        All Rights Reserved <br>&copy; 2020 by SemiColonWeb<br>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
 
                 </div><!-- .footer-widgets-wrap end -->
-
             </div>
-
         </footer><!-- #footer end -->
 
     </div><!-- #wrapper end -->
@@ -230,7 +233,7 @@
             });
         });
     </script>
-
+    <script src="~/js/customNavActiveChange.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -5,102 +5,89 @@
     Layout = "_LayoutTheme";
 }
 
-<div class="register-container-main d-flex justify-content-center">
-    <div class="row register-sizing-container">
-        <div class="col-md-12">
-            <div class="mb-5">
-                <h3 class="text-center">Register through Microsoft</h3>
-                <hr />
-                @{
-                    if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                    {
-                        <div>
-                            <p>
-                                There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                    article
-                                    about setting up this ASP.NET application to support logging in via external services
-                                </a>.
-                            </p>
-                        </div>
-                    }
-                    else
-                    {
-                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                            <div class="w-100 d-flex justify-content-center">
 
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-crimson w-100 register-btn-max-width" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
-                                        <img src="~/img/microsoft-logo.png" class="provider-logo" />
-                                        @provider.DisplayName
-                                    </button>
-                                }
-
-                            </div>
-                        </form>
-                    }
-                }
+<div class="container register-container">
+    <div class="cs-signin-form">
+        <div class="cs-signin-form-inner">
+            <div class="text-center">
+                <h3 class="h1 fw-bolder mb-3">Register</h3>
+                <p class="text-smaller text-muted mb-4" style="line-height: 1.5;">Sign Up With Your Microsoft UA Email</p>
             </div>
-            <section class="mb-5">
-                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                    <h2 class="text-center" class>Create a new account.</h2>
-                    <hr />
-                    <div asp-validation-summary="ModelOnly" class="custom-ua-summary-error-message"></div>
+            <div class="d-flex justify-content-center mb-2">
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    @foreach (var provider in Model.ExternalLogins)
+                    {
+                        <button type="submit" class="social-icon si-small si-colored si-google" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label asp-for="Input.FirstName">First Name <span class="required-asterisk">*</span></label>
-                                <input asp-for="Input.FirstName" class="form-control" autocomplete="first-name" aria-required="true" placeholder="First Name" />
-                                <span asp-validation-for="Input.FirstName" class=""></span>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label asp-for="Input.LastName">Last Name <span class="required-asterisk">*</span></label>
-                                <input asp-for="Input.LastName" class="form-control" autocomplete="last-name" aria-required="true" placeholder="Last Name" />
-                                <span asp-validation-for="Input.LastName" class=""></span>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label asp-for="Input.Email">Email <span class="required-asterisk">*</span></label>
-                                <input asp-for="Input.Email" class="form-control" autocomplete="email" aria-required="true" placeholder="Email" />
-                                <span asp-validation-for="Input.Email" class=""></span>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label asp-for="Input.CWID">CWID <span class="required-asterisk">*</span></label>
-                                <input asp-for="Input.CWID" class="form-control" aria-required="true" placeholder="CWID" />
-                                <span asp-validation-for="Input.CWID" class=""></span>
-                            </div>
+                            <i class="icon-microsoft"></i>
+                            <i class="icon-microsoft"></i>
+                        </button>
+                    }
+                </form>
+            </div>
+
+            <div class="clear"></div>
+
+            <div class="divider divider-center my-2"><span>OR</span></div>
+
+            <form id="account" class="mb-0 row" method="post">
+                <div asp-validation-summary="ModelOnly" class="custom-ua-summary-error-message"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Input.FirstName" class="nott ls0 fw-normal mb-1">FirstName:</label>
+                            <input asp-for="Input.FirstName" id="login-form-username" class="form-control fw-semibold" placeholder="First Name" autocomplete="username" aria-required="true" />
+                            <span asp-validation-for="Input.FirstName" class="font-weight-bold"></span>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label asp-for="Input.PhoneNumber">Phone Number <span class="required-asterisk">*</span></label>
-                                <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="phone" aria-required="true" placeholder="Phone Number" />
-                                <span asp-validation-for="Input.PhoneNumber" class=""></span>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label asp-for="Input.Username">Username <span class="required-asterisk">*</span></label>
-                                <input asp-for="Input.Username" class="form-control" aria-required="true" placeholder="Username" />
-                                <span asp-validation-for="Input.Username" class=""></span>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label asp-for="Input.Password">Password <span class="required-asterisk">*</span></label>
-                                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Password" />
-                                <span asp-validation-for="Input.Password" class=""></span>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label asp-for="Input.ConfirmPassword">Confirm Password <span class="required-asterisk">*</span></label>
-                                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
-                                <span asp-validation-for="Input.ConfirmPassword" class=""></span>
-                            </div>
+                        <div class="form-group">
+                            <label asp-for="Input.LastName" class="nott ls0 fw-normal mb-1">Last Name:</label>
+                            <input asp-for="Input.LastName" id="login-form-username" class="form-control fw-semibold" placeholder="Last Name" autocomplete="username" aria-required="true" />
+                            <span asp-validation-for="Input.LastName" class="font-weight-bold"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.Username" class="nott ls0 fw-normal mb-1">Username:</label>
+                            <input asp-for="Input.Username" id="login-form-username" class="form-control fw-semibold" placeholder="Username" autocomplete="username" aria-required="true" />
+                            <span asp-validation-for="Input.Username" class="font-weight-bold"></span>
+                        </div>
+
+                        <div class="clear"></div>
+                        <div class="col-12 form-group">
+                            <label asp-for="Input.Password" class="nott ls0 fw-normal mb-1">Password:</label>
+                            <input asp-for="Input.Password" type="password" class="form-control fw-semibold" autocomplete="on" aria-required="true" placeholder="Password" />
+                            <span asp-validation-for="Input.Password" class="font-weight-bold"></span>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="clear"></div>
+                        <div class="col-12 form-group">
+                            <label asp-for="Input.ConfirmPassword" class="nott ls0 fw-normal mb-1">Confirm Password:</label>
+                            <input asp-for="Input.ConfirmPassword" type="password" class="form-control fw-semibold" autocomplete="on" aria-required="true" placeholder="Confirm Password" />
+                            <span asp-validation-for="Input.ConfirmPassword" class="font-weight-bold"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.Email" class="nott ls0 fw-normal mb-1">Email:</label>
+                            <input asp-for="Input.Email" id="login-form-username" class="form-control fw-semibold" placeholder="Email" autocomplete="on" aria-required="true" />
+                            <span asp-validation-for="Input.Email" class="font-weight-bold"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.CWID" class="nott ls0 fw-normal mb-1">CWID:</label>
+                            <input asp-for="Input.CWID" id="login-form-username" class="form-control fw-semibold" placeholder="CWID" autocomplete="on" aria-required="true" />
+                            <span asp-validation-for="Input.CWID" class="font-weight-bold"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.PhoneNumber" class="nott ls0 fw-normal mb-1">PhoneNumber:</label>
+                            <input asp-for="Input.PhoneNumber" id="login-form-username" class="form-control fw-semibold" placeholder="PhoneNumber" autocomplete="on" aria-required="true" />
+                            <span asp-validation-for="Input.PhoneNumber" class="font-weight-bold"></span>
+                        </div>
+                    </div>
+                </div>
 
 
+                <div class="col-12 mt-4">
+                    <button id="registerSubmit" type="submit" class="button button-large w-100 py-2 rounded-1 fw-medium nott ls0 m-0">Log in</button>
+                </div>
 
-                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-crimson">Register</button>
-                </form>
-            </section>
-
-
+            </form>
         </div>
     </div>
 </div>
@@ -108,3 +95,4 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
