@@ -29,20 +29,59 @@ namespace crimson_closet.Controllers
         // GET: CustOrders/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.CustOrder == null)
+            if (id == null || _context.OrderItemized == null)
             {
                 return NotFound();
             }
 
-            var custOrder = await _context.CustOrder
-                .Include(c => c.ApplicationUser)
+            //var orderItemized = await _context.OrderItemized
+            //    .Include(c => c.Item).Include(c => c.CustOrder)
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            var custOrder = await _context.OrderItemized
+                //.Include(c => c.Item)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (custOrder == null)
             {
                 return NotFound();
             }
 
-            return View(custOrder);
+            //MovieDetailsVM movieDetailsVM = new MovieDetailsVM();
+            //movieDetailsVM.movie = movies;
+            //movieDetailsVM.Tweets = new List<MovieTweet>();
+
+            //var userClient = new TwitterClient("NG0FC7MrlyDMAnVk6Rn2iHoY9", "nvJis0p2O3de5BTTtN0sTzPjHiiqqYuUf0aVAa0qA96kalE289", "1578168705917353984-4zzsC1YQGmlUHMIQ27Wpnq4aeVkBJK", "NXl96HT0OgCk07qaVaIVFYCsJ1SDLL3nUXxGCk66dj8XR");
+            //var searchResponse = await userClient.SearchV2.SearchTweetsAsync(movies.Title);
+            //var tweets = searchResponse.Tweets;
+            //var analyzer = new SentimentIntensityAnalyzer();
+            //foreach (var tweetText in tweets)
+            //{
+            //    var tweet = new MovieTweet();
+            //    tweet.TweetText = tweetText.Text;
+            //    var results = analyzer.PolarityScores(tweet.TweetText);
+            //    tweet.Sentiment = results.Compound;
+            //    movieDetailsVM.Tweets.Add(tweet);
+            //}
+
+            //return View(movieDetailsVM);
+
+            OrderItemized itemDetailsVM = new OrderItemized();
+            //itemDetailsVM.Item = custOrder;
+            itemDetailsVM.CustOrder = new CustOrder();
+
+            //var userClient = new TwitterClient("NG0FC7MrlyDMAnVk6Rn2iHoY9", "nvJis0p2O3de5BTTtN0sTzPjHiiqqYuUf0aVAa0qA96kalE289", "1578168705917353984-4zzsC1YQGmlUHMIQ27Wpnq4aeVkBJK", "NXl96HT0OgCk07qaVaIVFYCsJ1SDLL3nUXxGCk66dj8XR");
+            //var searchResponse = await userClient.SearchV2.SearchTweetsAsync(movies.Title);
+            //var tweets = searchResponse.Tweets;
+            //var analyzer = new SentimentIntensityAnalyzer();
+            //foreach (var tweetText in tweets)
+            //{
+            //    var tweet = new MovieTweet();
+            //    tweet.TweetText = tweetText.Text;
+            //    var results = analyzer.PolarityScores(tweet.TweetText);
+            //    tweet.Sentiment = results.Compound;
+            //    movieDetailsVM.Tweets.Add(tweet);
+            //}
+
+            return View(itemDetailsVM);
         }
 
         // GET: CustOrders/Create
