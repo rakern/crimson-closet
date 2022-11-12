@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace crimson_closet.Migrations
 {
-    public partial class addCustOrderToDB : Migration
+    public partial class addCustOrder : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

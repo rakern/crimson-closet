@@ -22,7 +22,8 @@ namespace crimson_closet.Controllers
         // GET: CustOrders
         public async Task<IActionResult> Index()
         {
-              return View(await _context.CustOrder.ToListAsync());
+            var applicationDbContext = _context.CustOrder.Include(c => c.ApplicationUser);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: CustOrders/Details/5
@@ -34,6 +35,7 @@ namespace crimson_closet.Controllers
             }
 
             var custOrder = await _context.CustOrder
+                .Include(c => c.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (custOrder == null)
             {
@@ -46,6 +48,7 @@ namespace crimson_closet.Controllers
         // GET: CustOrders/Create
         public IActionResult Create()
         {
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace crimson_closet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,QuantOfItems,CheckOutDate,ReturnByDate")] CustOrder custOrder)
+        public async Task<IActionResult> Create([Bind("Id,ApplicationUserId,QuantOfItems,CheckOutDate,ReturnByDate")] CustOrder custOrder)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +66,7 @@ namespace crimson_closet.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", custOrder.ApplicationUserId);
             return View(custOrder);
         }
 
@@ -79,6 +83,7 @@ namespace crimson_closet.Controllers
             {
                 return NotFound();
             }
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", custOrder.ApplicationUserId);
             return View(custOrder);
         }
 
@@ -87,7 +92,7 @@ namespace crimson_closet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,QuantOfItems,CheckOutDate,ReturnByDate")] CustOrder custOrder)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ApplicationUserId,QuantOfItems,CheckOutDate,ReturnByDate")] CustOrder custOrder)
         {
             if (id != custOrder.Id)
             {
@@ -114,6 +119,7 @@ namespace crimson_closet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", custOrder.ApplicationUserId);
             return View(custOrder);
         }
 
@@ -126,6 +132,7 @@ namespace crimson_closet.Controllers
             }
 
             var custOrder = await _context.CustOrder
+                .Include(c => c.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (custOrder == null)
             {
