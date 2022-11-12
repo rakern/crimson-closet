@@ -1,0 +1,30 @@
+﻿
+:root {
+    --primary-color: #9e1b32;
+    --secondary-color: #828a8f;
+}
+
+
+.bg-alt {
+    background-color: var(--secondary-color) !important;
+}
+
+.bg-color-light {
+    color: #FFF !important;
+}
+
+.login-container{
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto;
+}
+.manage-account-container{
+    width: 100%;
+    max-width: 600px;
+    margin: 50px 0;
+}
+.register-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto;
+}

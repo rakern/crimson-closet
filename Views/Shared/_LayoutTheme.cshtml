@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="SemiColonWeb" />
+
+    <!-- Stylesheets
+    ============================================= -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Montserrat:300,400,500,600,700|Merriweather:300,400,300i,400i&display=swap" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="~/style.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/dark.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/swiper.css" type="text/css" />
+
+    <!-- eCommerce Demo Specific Stylesheet -->
+    <link rel="stylesheet" href="~/demos/ecommerce/ecommerce.css" type="text/css" />
+    <link rel="stylesheet" href="~/demos/ecommerce/css/fonts.css" type="text/css" />
+    <!-- / -->
+
+    <link rel="stylesheet" href="~/css/font-icons.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" type="text/css" />
+
+    <link rel="stylesheet" href="~/css/custom.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="~/css/colors.css" type="text/css" />
+    <link rel="stylesheet" href="~/custom-style.css" type="text/css" />
+
+   
+
+    <!-- Document Title
+    ============================================= -->
+    <title>Canvas Shop | Canvas</title>
+
+</head>
+<body>
+
+    <!-- Document Wrapper
+    ============================================= -->
+    <div id="wrapper" class="clearfix">
+
+        <!-- Top Bar
+        ============================================= -->
+        <!--
+        <div id="top-bar" class="dark">
+            <div class="container py-3">
+                <p class="center mb-0 clearfix">Back to the future of awesome Bags: Introducing canvas market. <a href="#">Shop Now</a><a href="#" id="close-bar" class="float-end border-bottom-0"><i class="icon-line-cross"></i></a></p>
+            </div>
+        </div>
+        -->
+        <!-- Header
+        ============================================= -->
+        <header id="header" class="full-header no-sticky" data-menu-padding="30">
+            <div id="header-wrap">
+                <div class="container">
+                    <div class="header-row align-items-lg-stretch">
+
+                        <!-- Logo
+                        ============================================= -->
+                        <div id="logo">
+                            <a class="standard-logo" asp-controller="Home" asp-action="Index"><img src="~/demos/ecommerce/images/logo.png" alt="Canvas Logo"></a>
+                            <a class="retina-logo" asp-controller="Home" asp-action="Index"><img src="~/demos/ecommerce/images/logo@2x.png" alt="Canvas Logo"></a>
+                        </div><!-- #logo end -->
+
+                        <div class="header-misc align-items-lg-stretch">
+
+                            <partial name="_LoginThemePartial" />
+
+                        </div>
+
+                        <div id="primary-menu-trigger">
+                            <svg class="svg-trigger" viewBox="0 0 100 100"><path d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path><path d="m 30,50 h 40"></path><path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path></svg>
+                        </div>
+
+                        <!-- Primary Navigation
+                        ============================================= -->
+                        <nav class="primary-menu style-ecommerce menu-spacing-margin">
+
+                            <ul class="menu-container">
+                                <li id="home-nav-link" class="menu-item"><a class="menu-link" asp-controller="Home" asp-action="Index"><div>Home</div></a></li>
+                                <li id="closet-nav-link" class="menu-item mega-menu"><a class="menu-link" asp-controller="Items" asp-action="Index"><div>Closet</div></a></li>
+                                <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" href="#"><div>Link1</div></a></li>
+                                <li class="menu-item"><a class="menu-link" href="#"><div>Link2</div></a></li>
+                                <li class="menu-item"><a class="menu-link" href="#"><div>Link3</div></a></li>
+                                <li class="menu-item"><a class="menu-link" href="#"><div>Link4</div></a></li>
+                                <li class="menu-item"><a class="menu-link" href="#"><div>Link5</div></a></li>
+                            </ul>
+
+                        </nav><!-- #primary-menu end -->
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="header-wrap-clone"></div>
+        </header><!-- #header end -->
+
+        <!-- Content
+        ============================================= -->
+        @RenderBody()
+
+        <!-- Footer
+         ============================================= -->
+        <footer id="footer" class="dark " style="background-color: var(--primary-color);">
+            <div class="container">
+
+                <!-- Footer Widgets
+                ============================================= -->
+                <div class="footer-widgets-wrap">
+
+                    <div class="row justify-content-center">
+                        <div class="col-lg-9">
+                            <div class="widget clearfix">
+
+                                <div class="row col-mb-30">
+                                    <div class="col-lg-3 col-6  ">
+                                        <ul style="list-style: none">
+                                            <li><a href="#">Home</a></li>
+                                            <li><a href="#">About</a></li>
+                                            <li><a href="#">FAQs</a></li>
+                                            <li><a href="#">Support</a></li>
+                                            <li><a href="#">Contact</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-lg-3 col-6 " >
+                                        <ul style="list-style: none">
+                                            <li><a href="#">Shop</a></li>
+                                            <li><a href="#">Portfolio</a></li>
+                                            <li><a href="#">Blog</a></li>
+                                            <li><a href="#">Events</a></li>
+                                            <li><a href="#">Forums</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-lg-3 col-6 ">
+                                        <ul style="list-style: none">
+                                            <li><a href="#">Corporate</a></li>
+                                            <li><a href="#">Agency</a></li>
+                                            <li><a href="#">eCommerce</a></li>
+                                            <li><a href="#">Personal</a></li>
+                                            <li><a href="#">One Page</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-lg-3 col-6 ">
+                                        <ul style="list-style: none">
+                                            <li><a href="#">Corporate</a></li>
+                                            <li><a href="#">Agency</a></li>
+                                            <li><a href="#">eCommerce</a></li>
+                                            <li><a href="#">Personal</a></li>
+                                            <li><a href="#">One Page</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 mt-5 mt-lg-0 text-center text-lg-end">
+                            <div class="widget clearfix">
+
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <small>Call Us:</small>
+                                        <h4 class="h4">+(1) 22 55412474</h4>
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-center justify-content-lg-end">
+                                        <a href="#" class="social-icon si-small si-light si-facebook">
+                                            <i class="icon-facebook"></i>
+                                            <i class="icon-facebook"></i>
+                                        </a>
+                                        <a href="#" class="social-icon si-small si-light si-delicious">
+                                            <i class="icon-delicious"></i>
+                                            <i class="icon-delicious"></i>
+                                        </a>
+                                        <a href="#" class="social-icon si-small si-light si-paypal">
+                                            <i class="icon-paypal"></i>
+                                            <i class="icon-paypal"></i>
+                                        </a>
+                                        <a href="#" class="social-icon si-small si-light si-flattr">
+                                            <i class="icon-flattr"></i>
+                                            <i class="icon-flattr"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 mt-5 text-white-50 text-smaller">
+                                        All Rights Reserved <br>&copy; 2020 by SemiColonWeb<br>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- .footer-widgets-wrap end -->
+            </div>
+        </footer><!-- #footer end -->
+
+    </div><!-- #wrapper end -->
+    @RenderBody()
+
+    <!-- Go To Top
+    ============================================= -->
+    <div id="gotoTop" class="icon-line-arrow-up"></div>
+
+    <!-- JavaScripts
+    ============================================= -->
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/plugins.min.js"></script>
+
+    <!-- Footer Scripts
+    ============================================= -->
+    <script src="~/js/functions.js"></script>
+
+    <script>
+
+        // Topbar Hide
+        $('#top-bar').on('click', '#close-bar', function () {
+            $(this).parents('#top-bar').slideUp(300);
+            $('body').css('padding-top', 0);
+        })
+
+        jQuery(window).on('pluginCarouselReady', function () {
+            // Custom Carousel
+            $('.owl-carousel').owlCarousel({
+                items: 1,
+                dotsContainer: '#item-color-dots',
+                loop: true,
+            });
+        });
+    </script>
+    <script src="~/js/customNavActiveChange.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

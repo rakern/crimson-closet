@@ -3,86 +3,68 @@
 
 @{
     ViewData["Title"] = "Log in";
-    Layout = "_LayoutUA";
+    Layout = "_LayoutTheme";
 }
+<div class="container login-container">
 
-<div class="row mt-5">
-    <div class="row">
-        <div class="col-md-12 d-flex justify-content-center">
-            <section class="w-100 mw-login-form">
-                <form id="account" method="post">
-                    <h2 class="text-center">Sign In With A Local Account</h2>
-                    <hr />
-                    <div asp-validation-summary="ModelOnly" class="custom-ua-summary-error-message"></div>
-                    <div class="form-group">
-                        <label asp-for="Input.Username" class="form-label">Username <span class="required-asterisk">*</span></label>
-                        <input asp-for="Input.Username" class="form-control" autocomplete="username" aria-required="true" placeholder="Username" />
-                        <span asp-validation-for="Input.Username" class="font-weight-bold"></span>
-                    </div>
-                    <div class="form-group mt-2">
-                        <label asp-for="Input.Password">Password <span class="required-asterisk">*</span></label>
-                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password" />
-                        <span asp-validation-for="Input.Password" class="font-weight-bold"></span>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="checkbox col-6">
-                            <label asp-for="Input.RememberMe" class="form-label">
-                                <input class="form-check-input" asp-for="Input.RememberMe" />
-                                @Html.DisplayNameFor(m => m.Input.RememberMe)
-                            </label>
-                        </div>
-                        <div class="col-6 d-flex justify-content-end">
-                            <p>
-                                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6 d-flex justify-content-end w-100">
-                        <p>
-                            <a id="forgot-password" asp-page="./Register">Create New Account</a>
-                        </p>
-                    </div>
-                    <div>
-                        <button id="login-submit" type="submit" class="btn btn-crimson w-100">Log in</button>
-                    </div>
+
+    <div class="cs-signin-form">
+        <div class="cs-signin-form-inner">
+            <div class="text-center">
+                <h3 class="h1 fw-bolder mb-3">Sign In</h3>
+                <p class="text-smaller text-muted mb-4" style="line-height: 1.5;">Sign In With Your Microsoft UA Email</p>
+            </div>
+            <div class="d-flex justify-content-center mb-2">
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+
+                    @foreach (var provider in Model.ExternalLogins)
+                    {
+                        <button type="submit" class="social-icon si-small si-colored si-google" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+
+                            <i class="icon-microsoft"></i>
+                            <i class="icon-microsoft"></i>
+                        </button>
+                    }
 
                 </form>
-            </section>
-        </div>
-    <div class="col-md-12 col-md-offset-2 d-flex justify-content-center">
-        <section>
-            <h3>Or Sign in with Microsoft</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                article
-                                about setting up this ASP.NET application to support logging in via external services
-                            </a>.
-                        </p>
+
+            </div>
+
+            <div class="clear"></div>
+
+            <div class="divider divider-center my-2"><span>OR</span></div>
+
+            <form id="account" class="mb-0 row" method="post">
+                <div asp-validation-summary="ModelOnly" class="custom-ua-summary-error-message"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Username" class="nott ls0 fw-normal mb-1">Username:</label>
+                    <input asp-for="Input.Username" id="login-form-username" class="form-control fw-semibold" placeholder="Username" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.Username" class="font-weight-bold"></span>
+                </div>
+
+                <div class="clear"></div>
+                <div class="col-12 form-group">
+                    <label asp-for="Input.Password" class="nott ls0 fw-normal mb-1">Password:</label>
+                    <input asp-for="Input.Password" type="password" class="form-control fw-semibold" autocomplete="current-password" aria-required="true" placeholder="Password" />
+                    <span asp-validation-for="Input.Password" class="font-weight-bold"></span>
+                </div>
+                <div class="col-12 d-flex justify-content-between">
+                    <div class="form-check form-check-inline">
+
+                        <label asp-for="Input.RememberMe" class="form-label">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-crimson w-100" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
-                                        <img src="~/img/microsoft-logo.png" class="provider-logo"/>
-                                        @provider.DisplayName
-                                    </button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
+                    <a id="forgot-password" class="text-smaller fw-medium" asp-page="./ForgotPassword"><u>Forgot Password?</u></a>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <button id="login-submit" type="submit" class="button button-large w-100 py-2 rounded-1 fw-medium nott ls0 m-0">Log in</button>
+                </div>
+            </form>
+            <p class="mb-0 mt-4 text-center fw-semibold">Don't have an account? <a id="forgot-password" asp-page="./Register">Sign Up</a></p>
+        </div>
     </div>
 </div>
 
@@ -90,4 +72,4 @@
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/loginPage.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-}
+    }

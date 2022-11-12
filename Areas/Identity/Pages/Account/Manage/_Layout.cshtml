@@ -1,20 +1,29 @@
 ﻿@{
-    
-        Layout = "/Views/Shared/_LayoutUA.cshtml";
+
+    Layout = "/Views/Shared/_LayoutTheme.cshtml";
 
 }
-
-<h1 class="text-center">Manage your account</h1>
-
-<div class="w-100 d-flex flex-column align-items-center">
-    <hr />
-    <div class="account-manage-container ">
-        <div class="w-100 d-flex flex-column align-items-center">
-            <partial name="_ManageNav" />
+<!-- Page Title
+        ============================================= -->
+<section id="page-title" class="bg-color border-bottom-0">
+    <div class="container">
+        <div class="d-flex align-items-center">
+            <img src="~/images/icons/avatar.jpg" alt="Author" class="rounded-circle me-3 border border-width-3 border-white" width="120" height="120">
+            <div>
+                <h2 class="h1 border-bottom border-width-4 bg-color-light" style="font-weight: 800">Manage your account</h2>
+                <p class="mb-0 bg-color-light">The University Of Alabama:  <strong>Crimson Closet</strong></p>
+            </div>
         </div>
-        <div class="w-100 d-flex flex-column align-items-center">
-            @RenderBody()
-        </div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a class="bg-color-light" asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item text-black-50 active bg-color-light" aria-current="page">Manage Profile</li>
+        </ol>
+    </div>
+</section>
+<partial name="_ManageNav" />
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="manage-account-container d-flex justify-content-center align-items-center flex-column">
+        @RenderBody()
     </div>
 </div>
 
