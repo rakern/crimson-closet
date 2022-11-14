@@ -13,7 +13,10 @@
     color: #FFF !important;
 }
 
-.login-container{
+.custom-ua-error-message {
+    color: var(--primary-color);
+}
+.login-container {
     width: 100%;
     max-width: 500px;
     margin: 50px auto;
@@ -22,6 +25,10 @@
     width: 100%;
     max-width: 600px;
     margin: 50px 0;
+}
+.no-input-style{
+    all:unset;
+  
 }
 .register-container {
     width: 100%;

@@ -39,14 +39,14 @@
                 <div class="form-group">
                     <label asp-for="Input.Username" class="nott ls0 fw-normal mb-1">Username:</label>
                     <input asp-for="Input.Username" id="login-form-username" class="form-control fw-semibold" placeholder="Username" autocomplete="username" aria-required="true" />
-                    <span asp-validation-for="Input.Username" class="font-weight-bold"></span>
+                    <span asp-validation-for="Input.Username" class="font-weight-bold custom-ua-error-message"></span>
                 </div>
 
                 <div class="clear"></div>
                 <div class="col-12 form-group">
                     <label asp-for="Input.Password" class="nott ls0 fw-normal mb-1">Password:</label>
                     <input asp-for="Input.Password" type="password" class="form-control fw-semibold" autocomplete="current-password" aria-required="true" placeholder="Password" />
-                    <span asp-validation-for="Input.Password" class="font-weight-bold"></span>
+                    <span asp-validation-for="Input.Password" class="font-weight-bold custom-ua-error-message"></span>
                 </div>
                 <div class="col-12 d-flex justify-content-between">
                     <div class="form-check form-check-inline">
