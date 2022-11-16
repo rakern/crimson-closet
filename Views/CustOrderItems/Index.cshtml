@@ -1,11 +1,11 @@
-﻿@model IEnumerable<crimson_closet.Models.CustOrder>
+﻿@model IEnumerable<crimson_closet.Models.CustOrderItem>
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutUA.cshtml";
+    Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
 
-<h2>Index</h2>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -14,13 +14,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.QuantOfItems)
+                @Html.DisplayNameFor(model => model.CustOrder)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CheckOutDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReturnByDate)
+                @Html.DisplayNameFor(model => model.Item)
             </th>
             <th></th>
         </tr>
@@ -29,13 +26,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.QuantOfItems)
+                @Html.DisplayFor(modelItem => item.CustOrder.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CheckOutDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturnByDate)
+                @Html.DisplayFor(modelItem => item.Item.ItemId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

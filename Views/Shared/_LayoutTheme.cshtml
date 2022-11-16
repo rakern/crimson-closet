@@ -81,8 +81,9 @@
                             <ul class="menu-container">
                                 <li id="home-nav-link" class="menu-item"><a class="menu-link" asp-controller="Home" asp-action="Index"><div>Home</div></a></li>
                                 <li id="closet-nav-link" class="menu-item mega-menu"><a class="menu-link" asp-controller="Items" asp-action="Index"><div>Closet</div></a></li>
-                                <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" href="#"><div>Link1</div></a></li>
-                                <li class="menu-item"><a class="menu-link" href="#"><div>Link2</div></a></li>
+                                <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" asp-controller="CustOrders" asp-action="CustomerOrders"><div>CustOrders</div></a></li>
+                                <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" asp-controller="CustOrders" asp-action="AllOrders"><div>AllOrders</div></a></li>
+                                <li class="menu-item"><a class="menu-link" href="#"><div>Admin Portal</div></a></li>
                             </ul>
 
                         </nav><!-- #primary-menu end -->

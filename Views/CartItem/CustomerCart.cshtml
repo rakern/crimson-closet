@@ -109,9 +109,11 @@
             <h3>Are you sure you want to checkout?</h3>
             <p class="mb-0">An order will be submitted once you press "Yes, Checkout!"</p>
         </div>
-        <div class="section center m-0" style="padding: 30px;">
-            <a class="button bg-alt" onClick="$.magnificPopup.close();return false;">Return</a>
-            <a asp-controller="Home" asp-action="Index" class="button">Yes, Checkout!</a>
-        </div>
+ 
+            <form class="section center m-0" asp-controller="CustOrders" asp-action="Checkout">
+                <a class="button bg-alt" onClick="$.magnificPopup.close();return false;">Return</a>
+                <button type="submit"  class="button">Yes, Checkout!</button>
+            </form>
+        
     </div>
 </div>

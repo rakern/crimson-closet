@@ -2,10 +2,10 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_LayoutUA.cshtml";
+    Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
 
-<h2>Create</h2>
+<h1>Create</h1>
 
 <h4>CustOrder</h4>
 <hr />
@@ -14,9 +14,8 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="QuantOfItems" class="control-label"></label>
-                <input asp-for="QuantOfItems" class="form-control" />
-                <span asp-validation-for="QuantOfItems" class="text-danger"></span>
+                <label asp-for="ApplicationUserId" class="control-label"></label>
+                <select asp-for="ApplicationUserId" class ="form-control" asp-items="ViewBag.ApplicationUserId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="CheckOutDate" class="control-label"></label>
@@ -29,7 +28,7 @@
                 <span asp-validation-for="ReturnByDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
