@@ -202,7 +202,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account
                 var CWIDAlreadyExists = _dbContext.Users.Any(x => x.CWID == Input.CWID);
                 if (CWIDAlreadyExists)
                 {
-                    ModelState.AddModelError(string.Empty, "An Account with that CWID already exists.");
+                    ModelState.AddModelError(string.Empty, "An account with that CWID already exists.");
                 }
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);

@@ -52,8 +52,47 @@
         -->
         <!-- Header
         ============================================= -->
-       
-        @Html.Partial("_Header");
+        <header id="header" class="full-header" data-menu-padding="30">
+            <div id="header-wrap">
+                <div class="container">
+                    <div class="header-row align-items-lg-stretch">
+
+                        <!-- Logo
+                        ============================================= -->
+                        <div id="logo">
+                            <a class="standard-logo" asp-controller="Home" asp-action="Index"><img src="~/demos/ecommerce/images/logo.png" alt="Canvas Logo"></a>
+                            <a class="retina-logo" asp-controller="Home" asp-action="Index"><img src="~/demos/ecommerce/images/logo@2x.png" alt="Canvas Logo"></a>
+                        </div><!-- #logo end -->
+
+                        <div class="header-misc align-items-lg-stretch">
+
+                            <partial name="_LoginThemePartial" />
+
+                        </div>
+
+                        <div id="primary-menu-trigger">
+                            <svg class="svg-trigger" viewBox="0 0 100 100"><path d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path><path d="m 30,50 h 40"></path><path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path></svg>
+                        </div>
+
+                        <!-- Primary Navigation
+                        ============================================= -->
+                        <nav class="primary-menu style-ecommerce menu-spacing-margin">
+
+                            <ul class="menu-container">
+                                <li id="home-nav-link" class="menu-item"><a class="menu-link" asp-controller="Home" asp-action="Index"><div>Home</div></a></li>
+                                <li id="closet-nav-link" class="menu-item mega-menu"><a class="menu-link" asp-controller="Items" asp-action="Index"><div>Closet</div></a></li>
+                                <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" href="#"><div>Link1</div></a></li>
+                                <li class="menu-item"><a class="menu-link" href="#"><div>Link2</div></a></li>
+                            </ul>
+
+                        </nav><!-- #primary-menu end -->
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="header-wrap-clone"></div>
+        </header><!-- #header end -->
 
         <!-- Content
         ============================================= -->
