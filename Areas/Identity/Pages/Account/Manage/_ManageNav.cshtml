@@ -2,8 +2,25 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-tabs crimson-color-tabs">
-    <li class="nav-item"><a class="nav-link nav-link-custom @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
-    <li class="nav-item"><a class="nav-link nav-link-custom @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
-    <li class="nav-item"><a class="nav-link nav-link-custom @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
-</ul>
+<!-- Page Sub Menu
+        ============================================= -->
+<div id="page-menu" class="no-sticky">
+    <div id="page-menu-wrap" class="bg-alt">
+        <div class="container">
+            <div class="page-menu-row">
+
+                <nav class="page-menu-nav">
+                    <ul class="page-menu-container">
+                        <li class="page-menu-item"><a id="profile" asp-page="./Index"><div>Profile</div></a></li>
+                        <li class="page-menu-item"><a id="email" asp-page="./Email"><div>Email</div></a></li>
+                        <li class="page-menu-item"><a id="change-password" asp-page="./ChangePassword"><div>Password</div></a></li>
+                    </ul>
+                </nav>
+
+                <div id="page-menu-trigger"><i class="icon-reorder"></i></div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- #page-menu end -->
+

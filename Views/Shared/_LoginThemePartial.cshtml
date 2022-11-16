@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using crimson_closet.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+    <!-- Top Cart
+    ============================================= -->
+    <div id="top-cart" class="header-misc-icon">
+        <a asp-controller="CartItem" asp-action="CustomerCart"><i class="icon-line-bag"></i></a>
+    </div>
+
+    <!-- #top-cart end -->
+    <!-- Top Account
+    ============================================= -->
+    <div class="header-misc-icon">
+        <a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="icon-line2-user"></i></a>
+    </div>
+
+    <!-- Log out
+    ============================================= -->
+    <form id="logoutForm" class="h-100 mb-0 " asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button id="logout " type="submit" class="h-100 border-0 bg-transparent">
+            <div class="header-misc-icon h-100">
+                <a>
+                    <i class="icon-line2-logout"></i>
+                </a>
+            </div>
+        </button>
+    </form>
+
+}
+else
+{
+    <nav class="primary-menu style-ecommerce menu-spacing-margin">
+        <ul class="menu-container" style="display:flex">
+            <div class="d-flex">
+                <li class=" "><a class="menu-link" id="register" asp-area="Identity" asp-page="/Account/Register"><div>Register</div></a></li>
+                <li class=""><a class="menu-link" id="login" asp-area="Identity" asp-page="/Account/Login"><div>Login</div></a></li>
+            </div>
+        </ul>
+    </nav>
+
+
+
+
+}
+
