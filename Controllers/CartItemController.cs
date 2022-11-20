@@ -35,6 +35,8 @@ namespace crimson_closet.Controllers
               return View();
         }
         
+
+
         // GET: Gets the page for all of the customer specific cart with items in it
         public async Task<IActionResult> CustomerCart()
         {

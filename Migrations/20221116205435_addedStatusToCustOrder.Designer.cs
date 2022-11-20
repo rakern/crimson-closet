@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using crimson_closet.Data;
 
@@ -11,9 +12,10 @@ using crimson_closet.Data;
 namespace crimson_closet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221116205435_addedStatusToCustOrder")]
+    partial class addedStatusToCustOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,27 +255,6 @@ namespace crimson_closet.Migrations
                     b.ToTable("ItemType");
                 });
 
-            modelBuilder.Entity("crimson_closet.Models.OrderItemized", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CustOrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ItemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustOrderId");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("OrderItemized");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -440,23 +421,6 @@ namespace crimson_closet.Migrations
                         .HasForeignKey("ItemTypeID");
 
                     b.Navigation("ItemType");
-                });
-
-            modelBuilder.Entity("crimson_closet.Models.OrderItemized", b =>
-                {
-                    b.HasOne("crimson_closet.Models.CustOrder", "CustOrder")
-                        .WithMany()
-                        .HasForeignKey("CustOrderId");
-
-                    b.HasOne("crimson_closet.Models.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CustOrder");
-
-                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

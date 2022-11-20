@@ -1,5 +1,4 @@
 ﻿using crimson_closet.Areas.Identity.Data;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace crimson_closet.Models
@@ -10,13 +9,16 @@ namespace crimson_closet.Models
 
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
-        public ApplicationUser? ApplicationUser { get; set; }
-        public int QuantOfItems { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public ApplicationUser ApplicationUser { get; set; }
+
         public DateTime CheckOutDate { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+
         public DateTime ReturnByDate { get; set; }
+
+        public string Status { get; set; }
+
+        public CustOrder() {
+            Status = "Pending";
+        }
     }
 }

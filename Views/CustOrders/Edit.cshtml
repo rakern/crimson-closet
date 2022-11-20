@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
 
-<h2>Edit</h2>
+<h1>Edit</h1>
 
 <h4>CustOrder</h4>
 <hr />
@@ -20,11 +20,6 @@
                 <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="QuantOfItems" class="control-label"></label>
-                <input asp-for="QuantOfItems" class="form-control" />
-                <span asp-validation-for="QuantOfItems" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="CheckOutDate" class="control-label"></label>
                 <input asp-for="CheckOutDate" class="form-control" />
                 <span asp-validation-for="CheckOutDate" class="text-danger"></span>
@@ -35,7 +30,7 @@
                 <span asp-validation-for="ReturnByDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

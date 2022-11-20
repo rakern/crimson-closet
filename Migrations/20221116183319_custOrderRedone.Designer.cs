@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using crimson_closet.Data;
 
@@ -11,9 +12,10 @@ using crimson_closet.Data;
 namespace crimson_closet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221116183319_custOrderRedone")]
+    partial class custOrderRedone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,9 +176,6 @@ namespace crimson_closet.Migrations
                     b.Property<DateTime>("ReturnByDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
@@ -251,27 +250,6 @@ namespace crimson_closet.Migrations
                     b.HasKey("ItemTypeID");
 
                     b.ToTable("ItemType");
-                });
-
-            modelBuilder.Entity("crimson_closet.Models.OrderItemized", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CustOrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ItemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustOrderId");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("OrderItemized");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -440,23 +418,6 @@ namespace crimson_closet.Migrations
                         .HasForeignKey("ItemTypeID");
 
                     b.Navigation("ItemType");
-                });
-
-            modelBuilder.Entity("crimson_closet.Models.OrderItemized", b =>
-                {
-                    b.HasOne("crimson_closet.Models.CustOrder", "CustOrder")
-                        .WithMany()
-                        .HasForeignKey("CustOrderId");
-
-                    b.HasOne("crimson_closet.Models.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CustOrder");
-
-                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

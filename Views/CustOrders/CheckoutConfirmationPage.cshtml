@@ -1,0 +1,28 @@
+﻿@model crimson_closet.Models.CustOrder
+
+@{
+    ViewData["Title"] = "CheckoutConfirmationPage";
+    Layout = "~/Views/Shared/_LayoutTheme.cshtml";
+}
+<!-- Page Title
+        ============================================= -->
+<section id="page-title" class="bg-color">
+
+    <div class="container clearfix">
+        <h1 class="bg-color-light">Checkout Successful!</h1>
+        <span class="bg-color-light">Order Number: @Html.DisplayFor(model => model.Id)</span>
+    </div>
+
+</section><!-- #page-title end -->
+<!-- Content
+============================================= -->
+<section id="content">
+    <div class="content-wrap">
+        <div class="container d-flex align-items-center">
+            <h3 class="mb-0">
+                Make your way down to the Alabama Student Center to Center to Pick up your clothes!
+            </h3>
+
+        </div>
+    </div>
+</section><!-- #content end -->
