@@ -2,86 +2,118 @@
 
 @{
     ViewData["Title"] = "CustomerCart";
-    Layout = "~/Views/Shared/_LayoutUA.cshtml";
+    Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
-
-<div class="breadcrumb-wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <h1 class="breadcrumb-page-title">Your Cart</h1>
-            </div> <!-- .col-md-6 -->
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <ol class="breadcrumb">
-                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-controller="Items" asp-action="Index">Closet</a></li>
-                    <li>Cart</li>
-                </ol>
-            </div> <!-- .col-md-6 -->
-        </div> <!-- .row -->
-    </div> <!-- .container -->
-</div> <!-- .breadcrumb-wrapper -->
-<section>
+<!-- Page Title
+        ============================================= -->
+<section id="page-title">
 
     <div class="container">
-        <div class="d-flex flex-row justify-content-end mb-5 mt-5">
-            <a asp-action="Create" class="btn btn-secondary">Create New</a>
-            <button class="btn btn-crimson margin-left-10" data-toggle="modal" data-target=".modal-small">
-                Checkout
-            </button>
-        </div>
+        <h1>Cart</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="CartItem" asp-action="CustomerCloset">Closet</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Cart</li>
+        </ol>
+    </div>
 
-        <!--Model for "are you sure you want to checkout?"-->
-        <div class="modal fade modal-small" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    
+</section><!-- #page-title end -->
 
-                    <div class="modal-body">
-                        <h4>Are you sure you want to checkout?</h4>
-                    </div> <!-- .modal-body -->
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-ar btn-secondary" data-dismiss="modal">No</button>
-                        <a asp-controller="CartItem" asp-action="NoCartPage" class="btn btn-ar btn-crimson">Yes, Checkout</a>
-                    </div> <!-- .modal-footer -->
-                </div> <!-- .modal-content -->
-            </div> <!-- .modal-dialog -->
-        </div> <!-- .modal -->
-
-        <div class="row">
+<div class="container">
+    <table class="table cart mb-5">
+        <thead>
+            <tr>
+                <th class="cart-product-remove">&nbsp;</th>
+                <th class="cart-product-thumbnail">&nbsp;</th>
+                <th class="cart-product-name">Brand</th>
+                <th class="cart-product-name">Type</th>
+                <th class="cart-product-name">Color</th>
+                <th class="cart-product-name">Size</th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var item in Model)
             {
                 var parms = new Dictionary<string, string>();
                 parms.Add("CartItemId", item.Id.ToString());
-                <div class="col-md-6 col-lg-4">
-                    <div class="thumbnail">
+
+                <tr class="cart_item">
+                    <td class="cart-product-remove">
+                        <form asp-action="Delete" style="margin:auto;">
+                            <button asp-controller="CartItem" asp-action="Delete" asp-all-route-data="parms" type="submit" class="no-input-style h-100 w-100 d-block">
+                                <i class="icon-trash2 remove text-center">
+                                </i>
+                            </button>
+                        </form>
+                    </td>
+
+                    <td class="cart-product-thumbnail">
                         @if (item.Item.ItemPhoto != null)
                         {
                             var base64 = Convert.ToBase64String(item.Item.ItemPhoto);
                             var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
-                            <img src="@imgSrc" class="card-image" />
+                            <img src="@imgSrc" width="100" height="100" />
 
                             //<img width="100" height="100" src="@Url.Action("GetActorPhoto", "Actors", new {item.ActorId})" />
                         }
                         else
                         {
-                            <img src="~/img/ua-square-logo.png" class="card-image" alt="">
+                            <img src="~/images/logo.png" class="card-image" alt="">
 
                         }
+                    </td>
 
-                        <div class="caption  text-center card-text">
-                            <h3>@Html.DisplayFor(modelItem => item.Item.ItemBrand): @Html.DisplayFor(modelItem => item.Item.ItemType.ItemDescription)</h3>
-                            <h6>Size: @Html.DisplayFor(modelItem => item.Item.ItemSize)</h6>
-                            <h6>Color: @Html.DisplayFor(modelItem => item.Item.ItemColor)</h6>
-                            <h6>Item Code: @Html.DisplayFor(modelItem => item.Item.ItemCode)</h6>
-                            <form asp-action="Delete">
-                                <input asp-controller="CartItem" asp-action="Delete" asp-all-route-data="parms" type="submit" value="Delete" class="btn btn-crimson" />
-                            </form>
-                        </div> <!-- .caption -->
-                    </div>
-                </div>
+                    <td class="cart-product-name">
+                        <a href="#">@Html.DisplayFor(modelItem => item.Item.ItemBrand)</a>
+                    </td>
+
+                    <td class="cart-product-name">
+                        <a href="#">@Html.DisplayFor(modelItem => item.Item.ItemType.ItemDescription)</a>
+                    </td>
+
+                    <td class="cart-product-name">
+                        <span class="amount">@Html.DisplayFor(modelItem => item.Item.ItemColor)</span>
+                    </td>
+
+                    <td class="cart-product-name">
+                        <span class="amount">@Html.DisplayFor(modelItem => item.Item.ItemSize)</span>
+                    </td>
+
+
+                </tr>
             }
+
+            <tr class="cart_item">
+                <td colspan="6">
+                    <div class="row justify-content-between py-2 col-mb-30">
+                        <div class="col-lg-auto ps-lg-0">
+                        </div>
+                        <div class="col-lg-auto pe-lg-0">
+                            <a class="button button-3d m-0 bg-alt" asp-controller="Items" asp-action="Index">Keep Shopping</a>
+                            <a href="#myModal1" data-lightbox="inline" class="button button-3d mt-2 mt-sm-0 me-0">Checkout</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+
+
+<!-- Modal -->
+
+<div class="modal1 mfp-hide" id="myModal1">
+    <div class="block mx-auto" style="background-color: #FFF; max-width: 500px;">
+        <div class="center" style="padding: 50px;">
+            <h3>Are you sure you want to checkout?</h3>
+            <p class="mb-0">An order will be submitted once you press "Yes, Checkout!"</p>
         </div>
+ 
+            <form class="section center m-0" asp-controller="CustOrders" asp-action="Checkout">
+                <a class="button bg-alt" onClick="$.magnificPopup.close();return false;">Return</a>
+                <button type="submit"  class="button">Yes, Checkout!</button>
+            </form>
+        
     </div>
-</section>
+</div>

@@ -1,8 +1,28 @@
 ﻿
 @{
     ViewData["Title"] = "NoCartPage";
-    Layout = "~/Views/Shared/_LayoutUA.cshtml";
+    Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
 
-<h2>NoCartPage</h2>
+<!-- Page Title
+		============================================= -->
+<section id="page-title" class="">
 
+	<div class="container clearfix">
+		<h1 class="">Nothing is in you cart</h1>
+		<span class="">Go pick some things out!</span>
+	</div>
+
+</section><!-- #page-title end -->
+<!-- Content
+============================================= -->
+<section id="content">
+	<div class="content-wrap">
+		<div class="container clearfix">
+			<h3>Empty Cart</h3>
+
+		</div>
+	</div>
+</section><!-- #content end -->
+
+<a class="menu-link" asp-controller="CartItem" asp-action="Create"><div>Create Cart Item</div></a>

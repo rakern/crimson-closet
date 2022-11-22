@@ -171,17 +171,38 @@ namespace crimson_closet.Migrations
                     b.Property<DateTime>("CheckOutDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("QuantOfItems")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ReturnByDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("CustOrder");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.CustOrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CustOrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustOrderId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("CustOrderItem");
                 });
 
             modelBuilder.Entity("crimson_closet.Models.Item", b =>
@@ -370,6 +391,25 @@ namespace crimson_closet.Migrations
                         .HasForeignKey("ApplicationUserId");
 
                     b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("crimson_closet.Models.CustOrderItem", b =>
+                {
+                    b.HasOne("crimson_closet.Models.CustOrder", "CustOrder")
+                        .WithMany()
+                        .HasForeignKey("CustOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("crimson_closet.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CustOrder");
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("crimson_closet.Models.Item", b =>

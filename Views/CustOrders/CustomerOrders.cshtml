@@ -1,0 +1,68 @@
+﻿@model IEnumerable<crimson_closet.Models.CustOrder>
+
+@{
+    ViewData["Title"] = "CustomerOrders";
+    Layout = "~/Views/Shared/_LayoutTheme.cshtml";
+}
+
+
+<!-- Page Title
+        ============================================= -->
+<section id="page-title" class="">
+
+    <div class="container clearfix">
+        <h1 class="">Your Order History</h1>
+        <span class="">All orders prior to @DateOnly.FromDateTime(DateTime.Now)</span>
+    </div>
+
+</section><!-- #page-title end -->
+<!-- Content
+============================================= -->
+<section id="content" class="container">
+    <div class="content-wrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        User
+                    </th>
+                    <th>
+                        Check-Out Date
+                    </th>
+                    <th>
+                        Return By
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CheckOutDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReturnByDate)
+                        </td>
+                          <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</section><!-- #content end -->
