@@ -4,6 +4,10 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
+@using System;
+@using System.ComponentModel.DataAnnotations;
+@using System.Linq;
+@using System.Reflection;
 
 <h2>Index</h2>
 
@@ -33,6 +37,9 @@
             </th>
             <th>
                 Type
+            </th>
+            <th>
+                Gender Type
             </th>
             <th></th>
         </tr>
@@ -68,6 +75,17 @@
             <td>
                     @Html.DisplayFor(modelItem => item.ItemType.ItemDescription)                
             </td>
+                <td>
+                    @if (item.ItemGender != null) {
+                        var enumValue = item.ItemGender;
+                        var itemGenderName = enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
+                        @Html.DisplayFor(modelItem => itemGenderName)
+                    }
+                    else {
+                        @Html.DisplayFor(modelItem => item.ItemGender)
+                    }            
+                  
+                </td>
             <td>
                     <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.ItemId">Details</a> |

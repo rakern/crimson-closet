@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace crimson_closet.Models
 {
@@ -9,6 +12,11 @@ namespace crimson_closet.Models
         Borrowed,
         AtCleaners
     }
+    public enum ItemGender
+    {
+        [Display(Name = "Men's")] Mens,
+        [Display(Name = "Women's")] Womens,
+    }
     public class Item
     {
         public Guid ItemId { get; set; }
@@ -17,6 +25,7 @@ namespace crimson_closet.Models
         public string? ItemBrand { get; set; }
         public string? ItemSize { get; set; }
         public string? ItemColor { get; set; }
+        public ItemGender? ItemGender { get; set; }
         public byte[]? ItemPhoto { get; set; }
 
         [ForeignKey("ItemType")]
@@ -27,4 +36,8 @@ namespace crimson_closet.Models
         [ForeignKey("ItemTypeID")]
         public virtual ItemType? ItemType { get; set; }
     }
+
+    
 }
+
+

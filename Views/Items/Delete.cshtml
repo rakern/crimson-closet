@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_LayoutUA.cshtml";
+    Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
 
 <h2>Delete</h2>
@@ -53,6 +53,9 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ItemType.ItemTypeID)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.ItemGender)
         </dd>
     </dl>
     

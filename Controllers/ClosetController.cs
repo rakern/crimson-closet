@@ -30,5 +30,24 @@ namespace crimson_closet.Controllers
             var applicationDbContext = _dbcontext.Item.Include(i => i.ItemType);
             return View(await applicationDbContext.ToListAsync());
         }
+
+        // GET: Items/Details/5
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null || _dbcontext.Item == null)
+            {
+                return NotFound();
+            }
+
+            var item = await _dbcontext.Item
+                .Include(i => i.ItemType)
+                .FirstOrDefaultAsync(m => m.ItemId == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
+        }
     }
 }

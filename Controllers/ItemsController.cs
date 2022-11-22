@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using crimson_closet.Data;
 using crimson_closet.Models;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace crimson_closet.Controllers
 {
@@ -70,7 +72,7 @@ namespace crimson_closet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemId,ItemCode,ItemStatus,ItemBrand,ItemSize,ItemColor,ItemTypeID")] Item item, IFormFile ItemPhoto)
+        public async Task<IActionResult> Create([Bind("ItemId,ItemCode,ItemStatus,ItemBrand,ItemSize,ItemColor,ItemTypeID,ItemGender")] Item item, IFormFile ItemPhoto)
         {
             if (ModelState.IsValid)
             {
@@ -115,7 +117,7 @@ namespace crimson_closet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ItemId,ItemCode,ItemStatus,ItemBrand,ItemSize,ItemColor,ItemTypeID")] Item item, IFormFile ItemPhoto)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ItemId,ItemCode,ItemStatus,ItemBrand,ItemSize,ItemColor,ItemTypeID,ItemGender")] Item item, IFormFile ItemPhoto)
         {
             if (id != item.ItemId)
             {
