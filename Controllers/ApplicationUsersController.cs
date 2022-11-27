@@ -1,13 +1,16 @@
 ﻿using crimson_closet.Areas.Identity.Data;
 using crimson_closet.Data;
 using crimson_closet.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Data;
 
 namespace crimson_closet.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class ApplicationUsersController : Controller
     {
         private readonly ILogger<HomeController> _logger;

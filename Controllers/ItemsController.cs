@@ -32,6 +32,7 @@ namespace crimson_closet.Controllers
         }
 
         // GET: Items
+
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _dbcontext.Item.Include(i => i.ItemType);

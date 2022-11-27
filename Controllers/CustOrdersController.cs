@@ -26,6 +26,7 @@ namespace crimson_closet.Controllers
         }
 
         // GET: CustOrders/AllOrders
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> AllOrders()
         {
             var applicationDbContext = _context.CustOrder.Include(c => c.ApplicationUser);
@@ -33,6 +34,7 @@ namespace crimson_closet.Controllers
         }
 
         // GET: CustOrders/CustomerOrders
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> CustomerOrders()
         {
             ApplicationUser currentUser = await _userManager.GetUserAsync(User);
@@ -42,6 +44,7 @@ namespace crimson_closet.Controllers
 
 
         // GET: CustOrders/CheckoutConfirmationPage
+        [Authorize(Roles = "Customer")]
         public IActionResult CheckoutConfirmationPage()
         {
             return View();
@@ -52,6 +55,7 @@ namespace crimson_closet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> Checkout()
         {
             Console.WriteLine("\n\n\n\nghghghgh\n\n\n\n");
@@ -98,6 +102,7 @@ namespace crimson_closet.Controllers
         }
 
         // GET: CustOrders/Details/5
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.CustOrder == null)
@@ -128,6 +133,7 @@ namespace crimson_closet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("Id,ApplicationUserId,CheckOutDate,ReturnByDate")] CustOrder custOrder)
         {
             if (ModelState.IsValid)
@@ -142,6 +148,7 @@ namespace crimson_closet.Controllers
         }
 
         // GET: CustOrders/Edit/5
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.CustOrder == null)
@@ -163,6 +170,7 @@ namespace crimson_closet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,ApplicationUserId,CheckOutDate,ReturnByDate")] CustOrder custOrder)
         {
             if (id != custOrder.Id)
@@ -195,6 +203,7 @@ namespace crimson_closet.Controllers
         }
 
         // GET: CustOrders/Delete/5
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.CustOrder == null)
