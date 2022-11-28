@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<crimson_closet.Models.CustOrder>
 
 @{
-    ViewData["Title"] = "AllOrders";
+    ViewData["Title"] = "AllPendingOrders";
     Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
 
@@ -10,11 +10,11 @@
 <section id="page-title" class="">
 
     <div class="container clearfix">
-        <h1 class="">Admin: All Orders</h1>
+        <h1 class="">Employee: All Overdue Orders</h1>
         <span class="">All orders prior to @DateOnly.FromDateTime(DateTime.Now)</span>
         <ol class="breadcrumb">
             <li class="breadcrumb-item "><a class="" asp-controller="Home" asp-action="AdminPortal">Admin Portal</a></li>
-            <li class="breadcrumb-item text-black-50 active" aria-current="page">All Orders</li>
+            <li class="breadcrumb-item text-black-50 active " aria-current="page">Pending Orders</li>
         </ol>
     </div>
 

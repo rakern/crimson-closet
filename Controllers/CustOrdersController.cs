@@ -41,6 +41,23 @@ namespace crimson_closet.Controllers
             var applicationDbContext = _context.CustOrder.Include(c => c.ApplicationUser).Where( i => i.ApplicationUserId == currentUser.Id);
             return View(await applicationDbContext.ToListAsync());
         }
+        
+        // GET: CustOrders/AllOverdueOrders
+        [Authorize(Roles = "Employee")]
+        public async Task<IActionResult> AllOverdueOrders()
+        {
+            var applicationDbContext = _context.CustOrder.Include(c => c.ApplicationUser).Where( i => i.ReturnByDate < DateTime.Now);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        
+        // GET: CustOrders/AllPendingOrders
+        [Authorize(Roles = "Employee")]
+        public async Task<IActionResult> AllPendingOrders()
+        {
+            var applicationDbContext = _context.CustOrder.Include(c => c.ApplicationUser).Where( i => i.Status.ToLower() == "pending");
+            return View(await applicationDbContext.ToListAsync());
+        }
 
 
         // GET: CustOrders/CheckoutConfirmationPage
