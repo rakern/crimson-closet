@@ -1,5 +1,7 @@
 ﻿using crimson_closet.Data;
+using crimson_closet.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace crimson_closet.Controllers
@@ -28,6 +30,10 @@ namespace crimson_closet.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _dbcontext.Item.Include(i => i.ItemType);
+
+            ViewData["ItemTypeID"] = new SelectList(_dbcontext.ItemType, "ItemTypeID", "ItemTypeID");
+            ViewData["ItemTypes"] = new SelectList(_dbcontext.ItemType, "ItemTypeID", "ItemDescription");
+
             return View(await applicationDbContext.ToListAsync());
         }
 

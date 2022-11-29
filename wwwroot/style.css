@@ -3610,6 +3610,14 @@ body:not(.top-search-open) .top-search-parent #primary-menu-trigger {
 	width: 100%;
 }
 
+.closet-menu-container {
+	display: none;
+	list-style: none;
+	margin: 0;
+	width: 100%;
+	text-align: center;
+}
+
 .menu-item {
 	position: relative;
 }
