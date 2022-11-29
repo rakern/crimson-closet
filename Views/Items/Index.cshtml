@@ -14,6 +14,60 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<<<<<<< HEAD
+=======
+<table id="page-id-closet" class="table ">
+    <thead>
+        <tr>
+            <th>
+                Code
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Brand
+            </th>
+            <th>
+                Size
+            </th>
+            <th>
+                Color
+            </th>
+            <th>
+                Photo
+            </th>
+            <th>
+                Type
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ItemCode)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ItemStatus)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ItemBrand)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ItemSize)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ItemColor)
+            </td>
+            <td>
+                    @if (item.ItemPhoto != null)
+                    {
+                        var base64 = Convert.ToBase64String(item.ItemPhoto);
+                        var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
+                        <img src="@imgSrc" height="100" width="100" style="border-radius:50%" />
+>>>>>>> master
 
 <div class="row">
     <div class="col-md-2">

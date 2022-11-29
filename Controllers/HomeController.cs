@@ -1,5 +1,7 @@
 ﻿using crimson_closet.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Diagnostics;
 
 namespace crimson_closet.Controllers
@@ -17,11 +19,16 @@ namespace crimson_closet.Controllers
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        [Authorize(Roles = "Administrator")]
+        public IActionResult AdminPortal()
         {
             return View();
         }
+
+        //public IActionResult Privacy()
+        //{
+        //    return View();
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

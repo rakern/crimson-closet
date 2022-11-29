@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace crimson_closet.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Customer")]
     public class CartItemController : Controller
     {
         private readonly ApplicationDbContext _dbcontext;

@@ -9,6 +9,7 @@
     ============================================= -->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Montserrat:300,400,500,600,700|Merriweather:300,400,300i,400i&display=swap" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="~/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" integrity="sha384-L5rLJDVZhrHrRIaa3eLLU/uLS3+3gVzd1vFs4wVyufS93DmLRAdBySoFzqFDwuQJ" crossorigin="anonymous">
     <link rel="stylesheet" href="~/style.css" type="text/css" />
     <link rel="stylesheet" href="~/css/dark.css" type="text/css" />
     <link rel="stylesheet" href="~/css/swiper.css" type="text/css" />
@@ -19,6 +20,8 @@
     <!-- / -->
 
     <link rel="stylesheet" href="~/css/font-icons.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/font-icons.css" type="text/css" />
+    <link rel="stylesheet" href="~/one-page/css/et-line.css" type="text/css" />
     <link rel="stylesheet" href="~/css/animate.css" type="text/css" />
     <link rel="stylesheet" href="~/css/magnific-popup.css" type="text/css" />
 
@@ -28,11 +31,16 @@
     <link rel="stylesheet" href="~/css/colors.css" type="text/css" />
     <link rel="stylesheet" href="~/custom-style.css" type="text/css" />
 
-   
+    <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="~/include/rs-plugin/css/settings.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/include/rs-plugin/css/layers.css">
+    <link rel="stylesheet" type="text/css" href="~/include/rs-plugin/css/navigation.css">
+
+
 
     <!-- Document Title
     ============================================= -->
-    <title>Canvas Shop | Canvas</title>
+    <title>Crimson Closet - University of Alabama</title>
 
 </head>
 <body>
@@ -81,9 +89,7 @@
                             <ul class="menu-container">
                                 <li id="home-nav-link" class="menu-item"><a class="menu-link" asp-controller="Home" asp-action="Index"><div>Home</div></a></li>
                                 <li id="closet-nav-link" class="menu-item mega-menu"><a class="menu-link" asp-controller="Items" asp-action="Index"><div>Closet</div></a></li>
-                                <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" asp-controller="CustOrders" asp-action="CustomerOrders"><div>My Orders</div></a></li>
-                                <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" asp-controller="CustOrders" asp-action="AllOrders"><div>All Orders</div></a></li>
-                                <li class="menu-item"><a class="menu-link" href="#"><div>Admin Portal</div></a></li>
+                                <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" asp-controller="Home" asp-action="AdminPortal"><div>Admin Portal</div></a></li>
                             </ul>
 
                         </nav><!-- #primary-menu end -->
@@ -94,7 +100,6 @@
             </div>
             <div class="header-wrap-clone"></div>
         </header><!-- #header end -->
-
         <!-- Content
         ============================================= -->
         @RenderBody()
@@ -114,43 +119,43 @@
 
                                 <div class="row col-mb-30">
                                     @*<div class="col-lg-3 col-6  ">
-                                        <ul style="list-style: none">
-                                            <li><a href="#">Home</a></li>
-                                            <li><a href="#">About</a></li>
-                                            <li><a href="#">FAQs</a></li>
-                                            <li><a href="#">Support</a></li>
-                                            <li><a href="#">Contact</a></li>
-                                        </ul>
+                                    <ul style="list-style: none">
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">About</a></li>
+                                    <li><a href="#">FAQs</a></li>
+                                    <li><a href="#">Support</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                    </ul>
                                     </div>
 
                                     <div class="col-lg-3 col-6 " >
-                                        <ul style="list-style: none">
-                                            <li><a href="#">Shop</a></li>
-                                            <li><a href="#">Portfolio</a></li>
-                                            <li><a href="#">Blog</a></li>
-                                            <li><a href="#">Events</a></li>
-                                            <li><a href="#">Forums</a></li>
-                                        </ul>
+                                    <ul style="list-style: none">
+                                    <li><a href="#">Shop</a></li>
+                                    <li><a href="#">Portfolio</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">Events</a></li>
+                                    <li><a href="#">Forums</a></li>
+                                    </ul>
                                     </div>
 
                                     <div class="col-lg-3 col-6 ">
-                                        <ul style="list-style: none">
-                                            <li><a href="#">Corporate</a></li>
-                                            <li><a href="#">Agency</a></li>
-                                            <li><a href="#">eCommerce</a></li>
-                                            <li><a href="#">Personal</a></li>
-                                            <li><a href="#">One Page</a></li>
-                                        </ul>
+                                    <ul style="list-style: none">
+                                    <li><a href="#">Corporate</a></li>
+                                    <li><a href="#">Agency</a></li>
+                                    <li><a href="#">eCommerce</a></li>
+                                    <li><a href="#">Personal</a></li>
+                                    <li><a href="#">One Page</a></li>
+                                    </ul>
                                     </div>
 
                                     <div class="col-lg-3 col-6 ">
-                                        <ul style="list-style: none">
-                                            <li><a href="#">Corporate</a></li>
-                                            <li><a href="#">Agency</a></li>
-                                            <li><a href="#">eCommerce</a></li>
-                                            <li><a href="#">Personal</a></li>
-                                            <li><a href="#">One Page</a></li>
-                                        </ul>
+                                    <ul style="list-style: none">
+                                    <li><a href="#">Corporate</a></li>
+                                    <li><a href="#">Agency</a></li>
+                                    <li><a href="#">eCommerce</a></li>
+                                    <li><a href="#">Personal</a></li>
+                                    <li><a href="#">One Page</a></li>
+                                    </ul>
                                     </div>*@
                                 </div>
 
@@ -170,20 +175,20 @@
 
                                     <div class="col-12 d-flex justify-content-center justify-content-lg-end">
                                         @*<a href="#" class="social-icon si-small si-light si-facebook">
-                                            <i class="icon-facebook"></i>
-                                            <i class="icon-facebook"></i>
+                                        <i class="icon-facebook"></i>
+                                        <i class="icon-facebook"></i>
                                         </a>
                                         <a href="#" class="social-icon si-small si-light si-delicious">
-                                            <i class="icon-delicious"></i>
-                                            <i class="icon-delicious"></i>
+                                        <i class="icon-delicious"></i>
+                                        <i class="icon-delicious"></i>
                                         </a>
                                         <a href="#" class="social-icon si-small si-light si-paypal">
-                                            <i class="icon-paypal"></i>
-                                            <i class="icon-paypal"></i>
+                                        <i class="icon-paypal"></i>
+                                        <i class="icon-paypal"></i>
                                         </a>
                                         <a href="#" class="social-icon si-small si-light si-flattr">
-                                            <i class="icon-flattr"></i>
-                                            <i class="icon-flattr"></i>
+                                        <i class="icon-flattr"></i>
+                                        <i class="icon-flattr"></i>
                                         </a>*@
                                     </div>
 
@@ -211,10 +216,16 @@
     ============================================= -->
     <script src="~/js/jquery.js"></script>
     <script src="~/js/plugins.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" integrity="sha384-t11ZTRbO9om+k0pVXmc3c8SsIHonT3oUvoi3FxMm1c9DVQwl9VbTNv3+UjbUrI6Z" crossorigin="anonymous"></script>
 
     <!-- Footer Scripts
     ============================================= -->
     <script src="~/js/functions.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.make-jquery-table').DataTable();
+        });
+    </script>
 
     <script>
 

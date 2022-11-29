@@ -71,6 +71,7 @@ namespace crimson_closet.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [EmailAddress]
+            [RegularExpression(".*@crimson.ua.edu|.*@ua.edu|.*@cba.ua.edu", ErrorMessage = "Your email needs to be a valid UA Email (ex. crimson.ua.edu)")]
             [Display(Name = "New email")]
             public string NewEmail { get; set; }
         }
