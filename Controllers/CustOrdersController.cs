@@ -10,6 +10,7 @@ using crimson_closet.Models;
 using crimson_closet.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using MailKit.Search;
 
 namespace crimson_closet.Controllers
 {
@@ -39,6 +40,13 @@ namespace crimson_closet.Controllers
         {
             ApplicationUser currentUser = await _userManager.GetUserAsync(User);
             var applicationDbContext = _context.CustOrder.Include(c => c.ApplicationUser).Where( i => i.ApplicationUserId == currentUser.Id);
+            return View(await applicationDbContext.ToListAsync());
+        }
+          // GET: CustOrders/ActiveOrders
+        [Authorize(Roles = "Employee")]
+        public async Task<IActionResult> ActiveOrders()
+        {
+            var applicationDbContext = _context.CustOrder.Include(c => c.ApplicationUser).Where(i => i.Status.ToLower() == "active");
             return View(await applicationDbContext.ToListAsync());
         }
         
@@ -75,7 +83,6 @@ namespace crimson_closet.Controllers
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> Checkout()
         {
-            Console.WriteLine("\n\n\n\nghghghgh\n\n\n\n");
             ApplicationUser currentUser = await _userManager.GetUserAsync(User);
             CustOrder custOrder = new CustOrder();
             if (ModelState.IsValid)
@@ -103,6 +110,8 @@ namespace crimson_closet.Controllers
 					{
 						_context.Add(custOrderItem);
                         _context.Remove(cartItem);
+                        cartItem.Item.ItemStatus = ItemStatus.Borrowed;
+                        _context.Update(cartItem.Item);
 						await _context.SaveChangesAsync();
 					}
 					catch
@@ -116,6 +125,62 @@ namespace crimson_closet.Controllers
 
 			}
             return View(custOrder);
+        }
+
+        
+        [HttpPost, ActionName("ActivateOrder")]
+        [Route("/CustOrder/ActivateOrder/:OrderId", Name = "ActivateOrder")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ActivateOrder(Guid OrderId)
+        {
+           
+            try
+            {
+                CustOrder custOrder = _context.CustOrder.Where(i => i.Id == OrderId).FirstOrDefault();
+                custOrder.Status = "Active";
+                _context.Update(custOrder);
+                await _context.SaveChangesAsync();
+
+            }
+            catch
+            {
+                //doesnt work... my attempt on trying to throw a js error
+                return RedirectToAction("Error", "Home");
+            }
+
+       
+            return RedirectToAction("AllPendingOrders", "CustOrders");
+        }
+
+
+        [HttpPost, ActionName("CompleteOrder")]
+        [Route("/CustOrder/CompleteOrder/:OrderId", Name = "CompleteOrder")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CompleteOrder(Guid OrderId)
+        {
+
+            try
+            {
+                CustOrder custOrder = _context.CustOrder.Where(i => i.Id == OrderId).FirstOrDefault();
+                custOrder.Status = "Complete";
+                _context.Update(custOrder);
+                List<CustOrderItem> orderItemList = await _context.CustOrderItem.Where(i => i.CustOrderId == OrderId).Include(i => i.Item).ToListAsync();
+                foreach(CustOrderItem orderItem in orderItemList)
+                {
+                    orderItem.Item.ItemStatus = ItemStatus.InCloset;
+                    _context.Update(orderItem.Item);
+                }
+                await _context.SaveChangesAsync();
+
+            }
+            catch
+            {
+                //doesnt work... my attempt on trying to throw a js error
+                return RedirectToAction("Error", "Home");
+            }
+
+
+            return RedirectToAction("ActiveOrders", "CustOrders");
         }
 
         // GET: CustOrders/Details/5
@@ -231,6 +296,7 @@ namespace crimson_closet.Controllers
             var custOrder = await _context.CustOrder
                 .Include(c => c.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (custOrder == null)
             {
                 return NotFound();
@@ -252,6 +318,16 @@ namespace crimson_closet.Controllers
             if (custOrder != null)
             {
                 _context.CustOrder.Remove(custOrder);
+                if (custOrder.Status == "Active" ||custOrder.Status == "Pending")
+                {
+                    List<CustOrderItem> orderItemList = await _context.CustOrderItem.Where(i => i.CustOrderId == id).Include(i => i.Item).ToListAsync();
+                    foreach (CustOrderItem orderItem in orderItemList)
+                    {
+                        orderItem.Item.ItemStatus = ItemStatus.InCloset;
+                        _context.Update(orderItem.Item);
+                    }
+                    await _context.SaveChangesAsync();
+                }
             }
             
             await _context.SaveChangesAsync();

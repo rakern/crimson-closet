@@ -5,33 +5,29 @@
     Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>CustOrder</h4>
+<div class="container mt-5">
+    <h1> Order Details</h1>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             User
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ApplicationUser.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ApplicationUser.UserName)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Check-Out Date
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CheckOutDate)
+        <dd class="col-sm-10">
+            @DateOnly.FromDateTime(Model.CheckOutDate)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Return By
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReturnByDate)
+        <dd class="col-sm-10">
+            @DateOnly.FromDateTime(Model.ReturnByDate)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

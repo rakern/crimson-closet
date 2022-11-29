@@ -1,0 +1,119 @@
+﻿@model Item
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LayoutTheme.cshtml";
+}
+@using System;
+@using System.ComponentModel.DataAnnotations;
+@using System.Linq;
+@using System.Reflection;
+
+
+
+<!-- Content
+		============================================= -->
+		<section id="content">
+			<div class="content-wrap py-0 overflow-visible">
+
+				<div class="section bg-color dark overflow-visible mt-0">
+					<div class="container">
+
+						<!-- 1. Section
+						============================================= -->
+						<div class="single-product py-lg-3">
+
+							<!-- Product
+							============================================= -->
+							<div class="product">
+
+								<div class="row">
+
+									<!-- Product Image
+									============================================= -->
+									<div class="col-md-6">
+										<div class="row align-items-start gutter-30" data-lightbox="gallery"> <!-- .align-items-center for mobile Bugs fixed -->
+											@if (Model.ItemPhoto != null)
+											{
+												var base64 = Convert.ToBase64String(Model.ItemPhoto);
+												var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
+												<img src="@imgSrc" style="width:100%; height: auto" />
+
+											}
+										</div>
+									</div>
+
+									<!-- Product Description
+									============================================= -->
+									<div class="col-md-6 product-desc p-lg-5 px-4 py-0 mt-5 mt-md-0 content-sticky">
+
+										<!-- Product Title
+										============================================= -->
+										<h2 class="mb-3 fw-normal text-white">
+											@{
+												var displayName = Model.ItemColor + ' ' + Model.ItemBrand + ' ' + Model.ItemType.ItemDescription;
+												@Html.DisplayFor(model => displayName)
+									}
+								</h2>
+
+								<!-- Product Details
+								============================================= -->
+								<h4 class="h4 mb-5 fw-medium text-white">
+									@{
+										var itemDescription = "";
+										@if (Model.ItemGender != null)
+										{
+											var enumValue = Model.ItemGender;
+											var itemGenderName = enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
+											itemDescription += itemGenderName + " | ";
+										}
+										else
+										{
+											itemDescription += Model.ItemGender + " | ";
+										}
+
+										itemDescription += "Size: " + Model.ItemSize;
+
+										@Html.DisplayFor(model => itemDescription);
+
+									}
+											
+											
+										</h4>
+
+										<!-- Product Single - Quantity & Cart Button
+										============================================= -->
+										@{//sets the parameters
+										var parms = new Dictionary<string, string>
+											()
+											{
+											{ "ItemId", Model.ItemId.ToString() }
+											};
+									<form class="cart mb-0 d-flex align-items-center"  asp-action="AddToCart" >
+
+										<button asp-action="AddToCart"  asp-all-route-data="parms" type="submit" class="add-to-cart button button-large fw-medium color button-light bg-white px-lg-4 add-to-cart m-0 mb-3"><i style="position: relative; top: -2px;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--themecolor)" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M62.54543,144H188.10132a16,16,0,0,0,15.74192-13.13783L216,64H48Z" opacity="0.2"></path><path d="M184,184H69.81818L41.92162,30.56892A8,8,0,0,0,34.05066,24H16" fill="none" stroke="var(--themecolor)" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path><circle cx="80" cy="204" r="20" fill="none" stroke="var(--themecolor)" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></circle><circle cx="184" cy="204" r="20" fill="none" stroke="var(--themecolor)" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></circle><path d="M62.54543,144H188.10132a16,16,0,0,0,15.74192-13.13783L216,64H48" fill="none" stroke="var(--themecolor)" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path></svg></i> Add to cart</button>
+										</form><!-- Product Single - Quantity & Cart Button End -->
+										}
+
+										<!-- Line
+										============================================= -->
+										<div class="line my-5"></div>
+
+										
+
+
+									</div>
+								</div>
+
+							</div>
+
+						</div><!-- Section End -->
+
+					</div>
+
+				</div>
+
+				
+
+			</div>
+		</section><!-- #content end -->

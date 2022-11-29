@@ -109,7 +109,6 @@ namespace crimson_closet.Controllers
         }
 
         // POST: ApplicationRoles/Delete/UserId/RoleId
-
         [HttpPost, ActionName("Delete")]
         //We pass in both the UserId and RoleId to know which record to delete since they are both together the primary keys
         [Route("/ApplicationUserRoles/Delete/:UserId/:RoleId", Name = "deleteUserRole")]

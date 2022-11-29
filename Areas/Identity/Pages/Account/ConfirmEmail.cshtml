@@ -1,8 +1,20 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Title"] = "Confirm Email";
+    Layout = "_LayoutTheme";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<!-- Page Title
+        ============================================= -->
+<section id="page-title">
+
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+		<h3><partial name="_StatusMessage" model="Model.StatusMessage" /></h3>
+       
+    </div>
+
+</section><!-- #page-title end -->
+<section class="bg-alt " style="height: 8vw; width: 100%;"></section>

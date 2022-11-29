@@ -220,6 +220,9 @@ namespace crimson_closet.Migrations
                     b.Property<string>("ItemColor")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ItemGender")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("ItemPhoto")
                         .HasColumnType("varbinary(max)");
 

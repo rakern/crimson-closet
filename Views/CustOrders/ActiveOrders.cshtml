@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<crimson_closet.Models.CustOrder>
 
 @{
-    ViewData["Title"] = "AllPendingOrders";
+    ViewData["Title"] = "ActiveOrders";
     Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
 
@@ -10,11 +10,11 @@
 <section id="page-title" class="">
 
     <div class="container clearfix">
-        <h1 class="">Employee: All Pending Orders</h1>
+        <h1 class="">Employee: All Active Orders</h1>
         <span class="">All orders prior to @DateOnly.FromDateTime(DateTime.Now)</span>
         <ol class="breadcrumb">
             <li class="breadcrumb-item "><a class="" asp-controller="Home" asp-action="AdminPortal">Admin Portal</a></li>
-            <li class="breadcrumb-item text-black-50 active " aria-current="page">Pending Orders</li>
+            <li class="breadcrumb-item text-black-50 active " aria-current="page">Active Orders</li>
         </ol>
     </div>
 
@@ -41,7 +41,9 @@
                     <th>
                         Status
                     </th>
-                    <th>Make Active</th>
+                    <th>
+                        Complete
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -68,16 +70,15 @@
                             @{
                                 //sets the parameters
                                 var parms = new Dictionary<string, string>()
-                                {
-                                    { "OrderId", item.Id.ToString() }
-                                };
+                        {
+                        { "OrderId", item.Id.ToString() }
+                        };
 
-                                <form asp-action="ActivateOrder" class="m-0">
-                                    <input asp-action="ActivateOrder" asp-all-route-data="parms" type="submit" value="Activate" class="btn button m-0" />
+                                <form asp-action="CompleteOrder" class="m-0">
+                                    <input asp-action="CompleteOrder" asp-all-route-data="parms" type="submit" value="Complete" class="btn button m-0" style="background-color: limegreen"/>
                                 </form>
                             }
                         </td>
-
                         <td>
                             <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                             <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
