@@ -23,11 +23,14 @@
 ============================================= -->
 <section id="content" class="container">
     <div class="content-wrap">
-        <table class="table make-jquery-table">
+        <table class="table make-jquery-table table-hover table-striped">
             <thead>
                 <tr>
                     <th>
                         User
+                    </th>
+                    <th>
+                        Phone Number
                     </th>
                     <th>
                         Check-Out Date
@@ -47,6 +50,9 @@
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApplicationUser.PhoneNumber)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CheckOutDate)
