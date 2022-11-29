@@ -9,6 +9,13 @@
     background-color: var(--secondary-color) !important;
 }
 
+.crimson-btn {
+    color: var(--primary-color)!important;
+    border: 2px solid var(--primary-color) ;
+}
+.crimson-color {
+    color: var(--primary-color);
+}
 .bg-color-light {
     color: #FFF !important;
 }

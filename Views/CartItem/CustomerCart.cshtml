@@ -19,8 +19,8 @@
 
 </section><!-- #page-title end -->
 
-<div class="container">
-    <table class="table cart mb-5">
+<div class="container mt-4">
+    <table class="table cart mb-5 make-jquery-table table-hover ">
         <thead>
             <tr>
                 <th class="cart-product-remove">&nbsp;</th>
@@ -83,21 +83,18 @@
                 </tr>
             }
 
-            <tr class="cart_item">
-                <td colspan="6">
-                    <div class="row justify-content-between py-2 col-mb-30">
-                        <div class="col-lg-auto ps-lg-0">
-                        </div>
-                        <div class="col-lg-auto pe-lg-0">
-                            <a class="button button-3d m-0 bg-alt" asp-controller="Items" asp-action="Index">Keep Shopping</a>
-                            <a href="#myModal1" data-lightbox="inline" class="button button-3d mt-2 mt-sm-0 me-0">Checkout</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+
         </tbody>
 
     </table>
+    <div class="row justify-content-between py-2 col-mb-30 mt-5 mb-3">
+        <div class="col-lg-auto ps-lg-0">
+        </div>
+        <div class="col-lg-auto pe-lg-0">
+            <a class="button button-3d m-0 bg-alt" asp-controller="Items" asp-action="Index">Keep Shopping</a>
+            <a href="#myModal1" data-lightbox="inline" class="button button-3d mt-2 mt-sm-0 me-0">Checkout</a>
+        </div>
+    </div>
 </div>
 
 
@@ -109,11 +106,11 @@
             <h3>Are you sure you want to checkout?</h3>
             <p class="mb-0">An order will be submitted once you press "Yes, Checkout!"</p>
         </div>
- 
-            <form class="section center m-0" asp-controller="CustOrders" asp-action="Checkout">
-                <a class="button bg-alt" onClick="$.magnificPopup.close();return false;">Return</a>
-                <button type="submit"  class="button">Yes, Checkout!</button>
-            </form>
-        
+
+        <form class="section center m-0" asp-controller="CustOrders" asp-action="Checkout">
+            <a class="button bg-alt" onClick="$.magnificPopup.close();return false;">Return</a>
+            <button type="submit" class="button">Yes, Checkout!</button>
+        </form>
+
     </div>
 </div>
