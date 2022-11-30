@@ -20,6 +20,13 @@
     color: #FFF !important;
 }
 
+.custom-card {
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
 .custom-ua-error-message {
     color: var(--primary-color);
 }

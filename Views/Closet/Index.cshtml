@@ -44,14 +44,14 @@
 						if (item.ItemStatus != null)
 						{
 							<div class="col-lg-3 col-md-6">
-								<div class="portfolio-item">
-									<div class="portfolio-image clearfix" height="200" width="100">
+								<div class="portfolio-item custom-card mb-4">
+									<div class="portfolio-image  clearfix">
 
 										@if (item.ItemPhoto != null)
 										{
 											var base64 = Convert.ToBase64String(item.ItemPhoto);
 											var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
-											<img src="@imgSrc" height="100" width="100" />
+											<img src="@imgSrc" />
 
 										}
 
@@ -79,7 +79,7 @@
 											</h3>
 
 											<span class="mt-0" style="font-size: 16px;">
-												<a href="#">
+												<a asp-action="Details" asp-route-id="@item.ItemId">
 													@if (item.ItemGender != null)
 													{
 														var enumValue = item.ItemGender;

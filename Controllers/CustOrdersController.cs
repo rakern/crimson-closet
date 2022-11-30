@@ -199,8 +199,12 @@ namespace crimson_closet.Controllers
             {
                 return NotFound();
             }
+            Order_VM order = new Order_VM();
+			order.Order = custOrder;
+			order.CustOrderItemList = await _context.CustOrderItem.Where(i => i.CustOrderId == custOrder.Id).Include(i => i.Item).ThenInclude(i => i.ItemType).ToListAsync();
 
-            return View(custOrder);
+
+			return View(order);
         }
 
         // GET: CustOrders/Create
