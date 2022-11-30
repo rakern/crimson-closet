@@ -6,7 +6,7 @@ using Services.EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 //hide the connection stirng in an envirment varibale for protection
-var connectionString = Environment.GetEnvironmentVariable("CrimsonClosetSQLConnectionString") ?? throw new InvalidOperationException("Connection string 'dbContextConnection' not found.");
+var connectionString = "Server=tcp:crimson-closet-server.database.windows.net,1433;Initial Catalog=crimson_closet;Persist Security Info=False;User ID=ccAdmin;Password=Dre554$ucce55;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
