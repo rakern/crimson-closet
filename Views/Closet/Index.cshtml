@@ -1,122 +1,128 @@
 ﻿@model IEnumerable<Item>
 
 @{
-	ViewData["Title"] = "Index";
-	Layout = "~/Views/Shared/_LayoutTheme.cshtml";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutTheme.cshtml";
 }
 @using System;
 @using System.ComponentModel.DataAnnotations;
 @using System.Linq;
 @using System.Reflection;
 
-<div class="container">
+<div class="container clearfix">
 
-	<div class="row">
-
-
-		<!-- cards for each item -->
-		<div class="section clearfix" style="padding: 80px 0;">
-			<div class="container clearfix">
-
-				<div class="heading-block border-bottom-0 center">
-					<h3 class="fw-normal" style="font-size: 24px;">Closet</h3>
-				</div>
-
-				<nav class="primary-menu style-ecommerce menu-spacing-margin" style="text-align: center; font-size: 18px;">
-
-					
-
-				</nav><!-- #primary-menu end -->
-
-				<form class="top-search-form" action="search.html" method="get">
-					<input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter.." autocomplete="off">
-				</form>
-
-				<div class="row clearfix">
-					@foreach (var item in Model)
-					{
-						//sets the parameters
-						var parms = new Dictionary<string, string>()
-						{
-							{ "ItemId", item.ItemId.ToString() }
-						};
-
-						if (item.ItemStatus != null)
-						{
-							<div class="col-lg-3 col-md-6">
-								<div class="portfolio-item custom-card mb-4">
-									<div class="portfolio-image  clearfix">
-
-										@if (item.ItemPhoto != null)
-										{
-											var base64 = Convert.ToBase64String(item.ItemPhoto);
-											var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
-											<img src="@imgSrc" />
-
-										}
-
-										<div class="product-cart">
-											<form id="AddToCartForm" class="h-100 mb-0 " asp-action="AddToCart">
-												<button id="AddToCartBtn" type="submit" asp-action="AddToCart" asp-all-route-data="parms" class="h-100 w-100 border-0 bg-transparent">
-													<div data-bs-toggle="tooltip" data-bs-placement="top" title="Add to Cart">
-														<i class="icon-shopping-cart"></i>
-													</div>
-												</button>
-											</form>
-											
-										</div>
-										<div class="product-quickview"><a asp-action="Details" asp-route-id="@item.ItemId" data-bs-toggle="tooltip" data-bs-placement="top" title="Item Details"><i class="icon-info"></i></a></div>
-									</div>
-									<div class="portfolio-desc pb-0-content-between">
-										<div>
-											<h3 style="font-size: 18px;">
-												<a asp-action="Details" asp-route-id="@item.ItemId">
-													@{
-														var displayName = item.ItemBrand + ' ' + item.ItemType.ItemDescription;
-														@Html.DisplayFor(modelItem => displayName)
-													}
-												</a>
-											</h3>
-
-											<span class="mt-0" style="font-size: 16px;">
-												<a asp-action="Details" asp-route-id="@item.ItemId">
-													@if (item.ItemGender != null)
-													{
-														var enumValue = item.ItemGender;
-														var itemGenderName = enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
-														var itemInfo = itemGenderName + " | Color: " + item.ItemColor + " | Size: " + item.ItemSize;
-														@Html.DisplayFor(modelItem => itemInfo)
-													}
-													else
-													{
-														var itemInfo = item.ItemGender + " | Color: " + item.ItemColor + " | Size: " + item.ItemSize;
-														@Html.DisplayFor(modelItem => item.ItemGender)
-													}
-												</a>
-											</span>
-
-										</div>
+    <div class="row">
 
 
-									</div>
-								</div>
-							</div>
-							<div class="w-100 bottommargin d-block d-md-none"></div>
-						}
-					}
+        <!-- cards for each item -->
+        <div class="section clearfix" style="padding: 80px 0;">
+            <div class="container clearfix">
+
+                <div class="heading-block border-bottom-0 center">
+                    <h3 class="fw-normal" style="font-size: 24px;">Closet</h3>
+                </div>
+
+                <nav class="primary-menu style-ecommerce menu-spacing-margin" style="text-align: center; font-size: 18px;">
 
 
-				</div>
 
-			</div>
-		</div>
-	</div>
+                </nav><!-- #primary-menu end -->
+
+                <form class="top-search-form" action="search.html" method="get">
+                    <input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter.." autocomplete="off">
+                </form>
+
+                <div class="row clearfix">
+                    @foreach (var item in Model)
+                    {
+                        //sets the parameters
+                        var parms = new Dictionary<string, string>()
+                    {
+                    { "ItemId", item.ItemId.ToString() }
+                    };
+
+                        if (item.ItemStatus != null)
+                        {
+                            <div class="col-lg-3 col-md-6">
+                                <div class="portfolio-item custom-card mb-4">
+                                    <a asp-action="Details" asp-route-id="@item.ItemId" data-bs-toggle="tooltip" data-bs-placement="top">
+                                        <div class="portfolio-image  clearfix">
+
+                                            @if (item.ItemPhoto != null)
+                                            {
+                                                var base64 = Convert.ToBase64String(item.ItemPhoto);
+                                                var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                                <img src="@imgSrc" />
+
+                                            }
+
+                                            <form id="AddToCartForm" class="h-100 mb-0 " asp-action="AddToCart">
+                                                <div class="product-cart">
+                                                    <button id="AddToCartBtn" type="submit" asp-action="AddToCart" asp-all-route-data="parms" class="h-100 w-100 border-0 bg-transparent">
+                                                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Add to Cart" class="d-flex justify-content-center align-items-center">
+                                                            <i class="icon-shopping-cart"></i>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </form>
+
+                                            <div class="product-quickview">
+                                                <a asp-action="Details" asp-route-id="@item.ItemId" data-bs-toggle="tooltip" data-bs-placement="top" title="Item Details">
+                                                    <i class="icon-info"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="portfolio-desc pb-0-content-between">
+                                            <div>
+                                                <h3 style="font-size: 18px;">
+                                                    <a asp-action="Details" asp-route-id="@item.ItemId">
+                                                        @{
+                                                            var displayName = item.ItemBrand + ' ' + item.ItemType.ItemDescription;
+                                                            @Html.DisplayFor(modelItem => displayName)
+                                                        }
+                                                    </a>
+                                                </h3>
+
+                                                <span class="mt-0" style="font-size: 16px;">
+                                                    <a asp-action="Details" asp-route-id="@item.ItemId">
+                                                        @if (item.ItemGender != null)
+                                                        {
+                                                            var enumValue = item.ItemGender;
+                                                            var itemGenderName = enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
+                                                            var itemInfo = itemGenderName + " | Color: " + item.ItemColor + " | Size: " + item.ItemSize;
+                                                            @Html.DisplayFor(modelItem => itemInfo)
+                                                        }
+                                                        else
+                                                        {
+                                                            var itemInfo = item.ItemGender + " | Color: " + item.ItemColor + " | Size: " + item.ItemSize;
+                                                            @Html.DisplayFor(modelItem => item.ItemGender)
+                                                        }
+                                                    </a>
+                                                </span>
+
+                                            </div>
+
+
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="w-100 bottommargin d-block d-md-none"></div>
+                        }
+                    }
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
 
 
 <form class="top-search-form" action="search.html" method="get">
-	<input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter.." autocomplete="off">
+    <input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter.." autocomplete="off">
 </form>
 

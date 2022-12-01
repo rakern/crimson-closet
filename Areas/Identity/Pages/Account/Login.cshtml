@@ -14,15 +14,16 @@
                 <h3 class="h1 fw-bolder mb-3">Sign In</h3>
                 <p class="text-smaller text-muted mb-4" style="line-height: 1.5;">Sign In With Your Microsoft UA Email</p>
             </div>
-            <div class="d-flex justify-content-center mb-2">
-                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+            <div class="d-flex justify-content-center mb-2 ">
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="mb-0 form-horizontal">
 
                     @foreach (var provider in Model.ExternalLogins)
                     {
-                        <button type="submit" class="social-icon si-small si-colored si-google" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                        <button type="submit" class="social-icon si-large si-colored si-google d-flex flex-column align-items-center" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
 
                             <i class="icon-microsoft"></i>
-                            <i class="icon-microsoft"></i>
+                            <i class="icon-microsoft "></i>
+                           
                         </button>
                     }
 
