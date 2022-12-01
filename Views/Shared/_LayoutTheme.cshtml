@@ -9,7 +9,6 @@
     ============================================= -->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Montserrat:300,400,500,600,700|Merriweather:300,400,300i,400i&display=swap" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="~/css/bootstrap.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" integrity="sha384-L5rLJDVZhrHrRIaa3eLLU/uLS3+3gVzd1vFs4wVyufS93DmLRAdBySoFzqFDwuQJ" crossorigin="anonymous">
     <link rel="stylesheet" href="~/style.css" type="text/css" />
     <link rel="stylesheet" href="~/css/dark.css" type="text/css" />
     <link rel="stylesheet" href="~/css/swiper.css" type="text/css" />
@@ -21,7 +20,6 @@
 
     <link rel="stylesheet" href="~/css/font-icons.css" type="text/css" />
     <link rel="stylesheet" href="~/css/font-icons.css" type="text/css" />
-    <link rel="stylesheet" href="~/one-page/css/et-line.css" type="text/css" />
     <link rel="stylesheet" href="~/css/animate.css" type="text/css" />
     <link rel="stylesheet" href="~/css/magnific-popup.css" type="text/css" />
 
@@ -35,6 +33,8 @@
     <link rel="stylesheet" type="text/css" href="~/include/rs-plugin/css/settings.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="~/include/rs-plugin/css/layers.css">
     <link rel="stylesheet" type="text/css" href="~/include/rs-plugin/css/navigation.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" integrity="sha384-L5rLJDVZhrHrRIaa3eLLU/uLS3+3gVzd1vFs4wVyufS93DmLRAdBySoFzqFDwuQJ" crossorigin="anonymous">
 
 
 
@@ -218,13 +218,14 @@
     <script src="~/js/jquery.js"></script>
     <script src="~/js/plugins.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" integrity="sha384-t11ZTRbO9om+k0pVXmc3c8SsIHonT3oUvoi3FxMm1c9DVQwl9VbTNv3+UjbUrI6Z" crossorigin="anonymous"></script>
-
     <!-- Footer Scripts
     ============================================= -->
     <script src="~/js/functions.js"></script>
     <script>
         $(document).ready(function () {
-            $('.make-jquery-table').DataTable();
+            $('.make-jquery-table').DataTable({
+                responsive: true
+            });
         });
     </script>
 
