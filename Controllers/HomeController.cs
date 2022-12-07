@@ -19,7 +19,7 @@ namespace crimson_closet.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator,Employee")]
         public IActionResult AdminPortal()
         {
             return View();

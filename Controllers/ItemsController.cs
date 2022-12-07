@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using crimson_closet.Data;
 using crimson_closet.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace crimson_closet.Controllers
 {
+    [Authorize(Roles = "Administrator,Employee")]
     public class ItemsController : Controller
     {
         private readonly ApplicationDbContext _dbcontext;
